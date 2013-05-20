@@ -14,10 +14,10 @@ except:   raise Exception("Imagen submodule needs to be updated - please run `gi
 
 try:
     from collections import OrderedDict
-    Cartesian2D.interval_dtype = OrderedDict
+    Cartesian2D.map_type = OrderedDict
 except ImportError:
     from topo.misc.odict import OrderedDict
-    Cartesian2D.interval_dtype = OrderedDict
+    Cartesian2D.map_type = OrderedDict
 
 import param
 
