@@ -114,7 +114,10 @@ class Display(param.Parameterized):
         return self._html_table(arr, size,  arr.min(), arr.max())
 
 
+from topo.command import analysis
+
 def _get_activity(sheet_or_projection):
+    # analysis.update_sheet_activity(sheet_or_projection.name)
     return sheet_or_projection.activity
 
 def _get_weights(cf):
@@ -124,6 +127,54 @@ def _get_weights(cf):
 sheet_display = Display(_get_activity)
 projection_display = Display(_get_activity)
 cf_display = Display(_get_weights)
+
+#============================================================#
+# Testing: Video display of dataviews recorded across  time  #
+#============================================================#
+
+import matplotlib.pyplot as plt
+from tempfile import NamedTemporaryFile
+from matplotlib import animation
+
+VIDEO_TAG = """<video controls>
+ <source src="data:video/x-m4v;base64,{0}" type="video/mp4">
+ Your browser does not support the video tag.
+</video>"""
+
+def anim_to_html(anim):
+    if not hasattr(anim, '_encoded_video'):
+        with NamedTemporaryFile(suffix='.mp4') as f:
+            anim.save(f.name, fps=20, extra_args=['-vcodec', 'libx264'])
+            video = open(f.name, "rb").read()
+        anim._encoded_video = video.encode("base64")
+    return VIDEO_TAG.format(anim._encoded_video)
+
+
+def sheetview_display(view):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.set_aspect('equal')
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
+
+    odict = view[:]
+    key_map = dict(enumerate(odict.keys()))
+    frames = len(key_map)
+
+    im = ax.imshow(np.random.rand(300,300),cmap='gray',interpolation='nearest')
+    im.set_clim([0,1])
+    fig.set_size_inches([5,5])
+
+    plt.tight_layout()
+
+    def update_img(n):
+        im.set_data(odict[key_map[n]])
+        return im
+
+    ani = animation.FuncAnimation(fig,update_img,frames,interval=30)
+    return anim_to_html(ani)
+
 
 _loaded = False
 def load_ipython_extension(ip):
@@ -142,3 +193,5 @@ def load_ipython_extension(ip):
         html_formatter.for_type_by_name('topo.base.sheet', 'Sheet', sheet_display)
         html_formatter.for_type_by_name('topo.base.projection', 'Projection', projection_display)
         html_formatter.for_type_by_name('topo.base.cf', 'ConnectionField', cf_display)
+
+        html_formatter.for_type_by_name('topo.base.sheetview', 'SheetView', sheetview_display)
