@@ -74,7 +74,6 @@
 <span class="kn">from</span> <span class="nn">param.parameterized</span> <span class="kn">import</span> <span class="n">Parameterized</span>
 <span class="kn">from</span> <span class="nn">topo.base.simulation</span> <span class="kn">import</span> <span class="n">OptionalSingleton</span>
 
-
 <span class="k">try</span><span class="p">:</span>
     <span class="c"># By default, use a non-GUI backend for matplotlib.</span>
     <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rcParams</span>
@@ -373,9 +372,12 @@
 
 <div class="viewcode-block" id="v_action"><a class="viewcode-back" href="../../../Reference_Manual/topo.misc.commandline-module.html#topo.misc.commandline.v_action">[docs]</a><span class="k">def</span> <span class="nf">v_action</span><span class="p">(</span><span class="n">option</span><span class="p">,</span><span class="n">opt_str</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Callback function for the -v option.&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">param.parameterized</span>
-    <span class="n">param</span><span class="o">.</span><span class="n">parameterized</span><span class="o">.</span><span class="n">min_print_level</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">parameterized</span><span class="o">.</span><span class="n">VERBOSE</span>
-    <span class="k">print</span> <span class="s">&quot;Enabling verbose message output.&quot;</span>
+    <span class="kn">from</span> <span class="nn">param</span> <span class="kn">import</span> <span class="n">parameterized</span>
+    <span class="n">parameterized</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">()</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Enabling verbose message output.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parameterized</span><span class="p">,</span><span class="s">&#39;get_logger&#39;</span><span class="p">):</span> 
+        <span class="n">parameterized</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">parameterized</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c"># For versions of the param package before 9 May 2013</span>
+        <span class="n">parameterized</span><span class="o">.</span><span class="n">min_print_level</span><span class="o">=</span><span class="n">parameterized</span><span class="o">.</span><span class="n">VERBOSE</span>
 </div>
 <span class="n">topo_parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;-v&quot;</span><span class="p">,</span><span class="s">&quot;--verbose&quot;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&quot;callback&quot;</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="n">v_action</span><span class="p">,</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;verbose&quot;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span><span class="se">\</span>
 <span class="s">enable verbose messaging output.&quot;&quot;&quot;</span><span class="p">)</span>
@@ -383,9 +385,12 @@
 
 <div class="viewcode-block" id="d_action"><a class="viewcode-back" href="../../../Reference_Manual/topo.misc.commandline-module.html#topo.misc.commandline.d_action">[docs]</a><span class="k">def</span> <span class="nf">d_action</span><span class="p">(</span><span class="n">option</span><span class="p">,</span><span class="n">opt_str</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Callback function for the -d option.&quot;&quot;&quot;</span>
-    <span class="kn">import</span> <span class="nn">param.parameterized</span>
-    <span class="n">param</span><span class="o">.</span><span class="n">parameterized</span><span class="o">.</span><span class="n">min_print_level</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">parameterized</span><span class="o">.</span><span class="n">DEBUG</span>
-    <span class="k">print</span> <span class="s">&quot;Enabling debugging message output.&quot;</span>
+    <span class="kn">from</span> <span class="nn">param</span> <span class="kn">import</span> <span class="n">parameterized</span>
+    <span class="n">parameterized</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">()</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Enabling debugging message output.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parameterized</span><span class="p">,</span><span class="s">&#39;get_logger&#39;</span><span class="p">):</span> 
+        <span class="n">parameterized</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">parameterized</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c"># For versions of the param package before 9 May 2013</span>
+        <span class="n">parameterized</span><span class="o">.</span><span class="n">min_print_level</span><span class="o">=</span><span class="n">parameterized</span><span class="o">.</span><span class="n">DEBUG</span>
 </div>
 <span class="n">topo_parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;-d&quot;</span><span class="p">,</span><span class="s">&quot;--debug&quot;</span><span class="p">,</span><span class="n">action</span><span class="o">=</span><span class="s">&quot;callback&quot;</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="n">d_action</span><span class="p">,</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;debug&quot;</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">help</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span><span class="se">\</span>
 <span class="s">enable debugging message output (implies --verbose).&quot;&quot;&quot;</span><span class="p">)</span>
@@ -434,6 +439,9 @@
 <span class="c"># Keeps track of whether something has been performed, when deciding whether to assume -i</span>
 <span class="n">something_executed</span><span class="o">=</span><span class="bp">False</span>
 
+<span class="c"># Dummy object used for user messages about OpenMP</span>
+<span class="n">openmp_main</span><span class="o">=</span><span class="n">Parameterized</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;OpenMP&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="c_action"><a class="viewcode-back" href="../../../Reference_Manual/topo.misc.commandline-module.html#topo.misc.commandline.c_action">[docs]</a><span class="k">def</span> <span class="nf">c_action</span><span class="p">(</span><span class="n">option</span><span class="p">,</span><span class="n">opt_str</span><span class="p">,</span><span class="n">value</span><span class="p">,</span><span class="n">parser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Callback function for the -c option.&quot;&quot;&quot;</span>
     <span class="c">#print &quot;Processing %s &#39;%s&#39;&quot; % (opt_str,value)</span>
@@ -443,7 +451,7 @@
     <span class="n">openmp_settings_names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;openmp_threads&#39;</span><span class="p">,</span> <span class="s">&#39;openmp_min_threads&#39;</span><span class="p">,</span> <span class="s">&#39;openmp_max_threads&#39;</span><span class="p">]</span>
     <span class="n">openmp_present</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">openmp_settings_names</span> <span class="k">if</span> <span class="p">(</span><span class="n">k</span> <span class="ow">in</span> <span class="n">__main__</span><span class="o">.</span><span class="n">__dict__</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">openmp_present</span> <span class="ow">and</span> <span class="n">parser</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">gui</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">WARNING: For OpenMP settings to be used properly they need to be specified after the -g flag.&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;For OpenMP settings to be used properly they need to be specified before the -g flag.&quot;</span><span class="p">)</span>
 </div>
 <span class="n">topo_parser</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s">&quot;-c&quot;</span><span class="p">,</span><span class="s">&quot;--command&quot;</span><span class="p">,</span><span class="n">action</span> <span class="o">=</span> <span class="s">&quot;callback&quot;</span><span class="p">,</span><span class="n">callback</span><span class="o">=</span><span class="n">c_action</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;string&quot;</span><span class="p">,</span>
 		       <span class="n">default</span><span class="o">=</span><span class="p">[],</span><span class="n">dest</span><span class="o">=</span><span class="s">&quot;commands&quot;</span><span class="p">,</span><span class="n">metavar</span><span class="o">=</span><span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">&lt;command&gt;</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">,</span>
@@ -544,30 +552,31 @@
         <span class="k">if</span> <span class="n">total_cores</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">total_cores</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="k">return</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Cannot import multiprocessing to determine number of cores.&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Cannot import multiprocessing to determine number of cores.&quot;</span><span class="p">)</span>
         <span class="n">total_cores</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">if</span> <span class="n">total_cores</span> <span class="ow">and</span> <span class="p">(</span><span class="o">-</span><span class="n">openmp_threads</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">total_cores</span><span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
-        <span class="k">print</span> <span class="s">&quot;OpenMP: Topographica needs a positive number of threads to execute!&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Needs a positive number of threads to execute.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">openmp_threads</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">total_cores</span><span class="p">:</span>      <span class="n">openmp_threads</span> <span class="o">=</span> <span class="n">total_cores</span> <span class="o">+</span> <span class="n">openmp_threads</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">openmp_threads</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">total_cores</span><span class="p">:</span>  <span class="k">return</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">total_cores</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">openmp_threads</span> <span class="o">&gt;</span> <span class="n">total_cores</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;OpenMP: More threads specified than cores detected.&quot;</span><span class="p">;</span> <span class="k">return</span> <span class="p">(</span><span class="n">total_cores</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;More threads specified than cores detected.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">total_cores</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">openmp_threads</span> <span class="o">&lt;</span> <span class="n">openmp_min_threads</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;OpenMP: Using minimum number of allowed threads.&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Using minimum number of allowed threads.&quot;</span><span class="p">)</span>
         <span class="n">openmp_threads</span> <span class="o">=</span> <span class="n">openmp_min_threads</span>
 
     <span class="k">if</span> <span class="p">(</span><span class="n">openmp_max_threads</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">):</span> <span class="k">return</span> <span class="p">(</span><span class="n">openmp_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="p">(</span><span class="n">openmp_max_threads</span> <span class="o">&lt;</span> <span class="n">openmp_min_threads</span><span class="p">):</span>
-        <span class="k">print</span><span class="s">&quot;OpenMP: Maximum allowed threads lower than minimum allowed threads. Ignoring maximum limit.&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Maximum allowed threads lower than minimum allowed threads. Ignoring maximum limit.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">openmp_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
     <span class="k">elif</span> <span class="p">(</span><span class="n">openmp_threads</span> <span class="o">&gt;</span> <span class="n">openmp_max_threads</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s">&quot;OpenMP: Using maximum number of allowed threads.&quot;</span>
+        <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Using maximum number of allowed threads.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">openmp_max_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">openmp_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
@@ -627,16 +636,16 @@
                                                          <span class="n">openmp_max_threads</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">num_threads</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;OpenMP: Using OMP_NUM_THREADS environment variable if set. Otherwise, all cores in use.&quot;</span>
+            <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Using OMP_NUM_THREADS environment variable if set. Otherwise, all cores in use.&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">num_threads</span> <span class="o">==</span> <span class="s">&#39;NSLOTS&#39;</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OMP_NUM_THREADS&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;NSLOTS&#39;</span><span class="p">]</span>
-            <span class="k">print</span> <span class="s">&quot;NSLOTS environment variable found; overriding any other thread settings and using N=</span><span class="si">%s</span><span class="s"> threads&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;NSLOTS&#39;</span><span class="p">]</span>
+            <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;NSLOTS environment variable found; overriding any other thread settings and using N=</span><span class="si">%s</span><span class="s"> threads&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;NSLOTS&#39;</span><span class="p">])</span>
 
         <span class="k">elif</span> <span class="n">total_cores</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;OpenMP: Using </span><span class="si">%d</span><span class="s"> threads&quot;</span> <span class="o">%</span> <span class="n">num_threads</span>
+            <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Using </span><span class="si">%d</span><span class="s"> threads&quot;</span> <span class="o">%</span> <span class="n">num_threads</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OMP_NUM_THREADS&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="nb">str</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s">&quot;OpenMP: Using </span><span class="si">%d</span><span class="s"> threads on a machine with </span><span class="si">%d</span><span class="s"> detected CPUs&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">)</span>
+            <span class="n">openmp_main</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="s">&quot;Using </span><span class="si">%d</span><span class="s"> threads on a machine with </span><span class="si">%d</span><span class="s"> detected CPUs&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_threads</span><span class="p">,</span> <span class="n">total_cores</span><span class="p">))</span>
             <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;OMP_NUM_THREADS&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="nb">str</span><span class="p">(</span><span class="n">num_threads</span><span class="p">)</span>
 
     <span class="c"># If no scripts and no commands were given, pretend -i was given.</span>
@@ -690,6 +699,9 @@
                               <span class="n">banner1</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">exit_msg</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">option</span><span class="o">.</span><span class="n">pdb</span><span class="p">:</span>
                 <span class="n">ipshell</span><span class="o">.</span><span class="n">call_pdb</span> <span class="o">=</span> <span class="bp">True</span>
+
+            <span class="c"># Load Topographica IPython extension in embedded shell</span>
+            <span class="n">ipshell</span><span class="o">.</span><span class="n">extension_manager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="s">&#39;topo.misc.ipython&#39;</span><span class="p">)</span>
             <span class="n">ipshell</span><span class="p">()</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
 </pre></div>
@@ -764,7 +776,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

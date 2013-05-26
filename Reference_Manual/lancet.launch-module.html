@@ -391,13 +391,13 @@ subprocess, qsub etc). This decorator helps solves this issue, making sure
 launch is the last thing in the definition function. The reduction_fn
 parameter is the proper way of executing code after the Launcher exits.</p>
 <dl class="docutils">
-<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">launch_fn</span></tt> (<em>constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The function that is to be applied.</dd>
 <dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">review</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Whether or not to perform a detailed review of the launch.</dd>
 <dt><em>param String</em> <tt class="docutils literal"><span class="pre">output_directory</span></tt> (<em>allow_None=False, constant=False, default=., instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The output directory - the directory that will contain all the root
          directories for the individual launches.</dd>
+<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">launch_fn</span></tt> (<em>constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The function that is to be applied.</dd>
 <dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">launcher_class</span></tt> (<em>constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The launcher class used for this lancet script.  Necessary to access
          launcher classmethods (to resume launch for example).</dd>
@@ -514,7 +514,7 @@ entire launch.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

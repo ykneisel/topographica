@@ -6,8 +6,8 @@ paramtk
 
 Submodules
 ==========
-* `paramtk.tilewrapper <paramtk.tilewrapper-module.html>`_
 * `paramtk.odict <paramtk.odict-module.html>`_
+* `paramtk.tilewrapper <paramtk.tilewrapper-module.html>`_
 
 
 Module

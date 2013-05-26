@@ -311,15 +311,36 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Classes of function objects computing a value given a time function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
 
     <span class="n">time_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Callable</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">constanttime</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        Function to generate the time used for calculating values.&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_fn</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="BoxCar"><a class="viewcode-back" href="../Reference_Manual/numbergen-module.html#numbergen.BoxCar">[docs]</a><span class="k">class</span> <span class="nc">BoxCar</span><span class="p">(</span><span class="n">TimeDependentValue</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The boxcar function over the specified time interval. The bounds</span>
+<span class="sd">    are exclusive: zero is returned at the onset time and at the</span>
+<span class="sd">    offset (onset+duration).</span>
 
+<span class="sd">    If duration is None, then this reduces to a step function around the</span>
+<span class="sd">    onset value with no offset.</span>
 
+<span class="sd">    See http://en.wikipedia.org/wiki/Boxcar_function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">onset</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Time of onset.&quot;</span><span class="p">)</span>
+
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="n">allow_None</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Duration of step value.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_fn</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">onset</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_fn</span><span class="p">()</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">onset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">1.0</span>
 </div>
 <div class="viewcode-block" id="ExponentialDecay"><a class="viewcode-back" href="../Reference_Manual/numbergen-module.html#numbergen.ExponentialDecay">[docs]</a><span class="k">class</span> <span class="nc">ExponentialDecay</span><span class="p">(</span><span class="n">TimeDependentValue</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -445,7 +466,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

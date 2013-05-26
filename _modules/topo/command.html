@@ -242,86 +242,31 @@
     <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">event_clear</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="pattern_present"><a class="viewcode-back" href="../../Reference_Manual/topo.command-module.html#topo.command.pattern_present">[docs]</a><span class="k">def</span> <span class="nf">pattern_present</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{},</span><span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">plastic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">overwrite_previous</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">apply_output_fns</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="runscript"><a class="viewcode-back" href="../../Reference_Manual/topo.command-module.html#topo.command.runscript">[docs]</a><span class="k">class</span> <span class="nc">runscript</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Present the specified test patterns for the specified duration.</span>
-
-<span class="sd">    Given a set of input patterns (dictionary of</span>
-<span class="sd">    GeneratorSheetName:PatternGenerator pairs), installs them into the</span>
-<span class="sd">    specified GeneratorSheets, runs the simulation for the specified</span>
-<span class="sd">    length of time, then restores the original patterns and the</span>
-<span class="sd">    original simulation time.  Thus this input is not considered part</span>
-<span class="sd">    of the regular simulation, and is usually for testing purposes.</span>
-
-<span class="sd">    As a special case, if &#39;inputs&#39; is just a single pattern, and not</span>
-<span class="sd">    a dictionary, it is presented to all GeneratorSheets.</span>
-
-<span class="sd">    If a simulation is not provided, the active simulation, if one</span>
-<span class="sd">    exists, is requested.</span>
-
-<span class="sd">    If this process is interrupted by the user, the temporary patterns</span>
-<span class="sd">    may still be installed on the retina.</span>
-
-<span class="sd">    If overwrite_previous is true, the given inputs overwrite those</span>
-<span class="sd">    previously defined.</span>
-
-<span class="sd">    If plastic is False, overwrites the existing values of Sheet.plastic</span>
-<span class="sd">    to disable plasticity, then reenables plasticity.</span>
-
-<span class="sd">    In order to to see the sequence of values presented, use the back arrow</span>
-<span class="sd">    history mechanism in the GUI. Note that the GUI&#39;s Activity window must</span>
-<span class="sd">    be open and the display parameter set to true (display=True).</span>
+<span class="sd">    Runs a script that has been parameterized with script parameters.</span>
+<span class="sd">    For example, runscript(&#39;tiny.ty&#39;, cortex_density=10) will execute</span>
+<span class="sd">    the &#39;tiny.ty&#39; script in the currently active namespace.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c"># ensure EPs get started (if pattern_present is called before the simulation is run())</span>
-    <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
+    <span class="n">ns</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{},</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        The namespace in which the script is to be executed.&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite_previous</span><span class="p">:</span>
-        <span class="n">save_input_generators</span><span class="p">()</span>
+    <span class="n">push</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Callable</span><span class="p">(</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Hook to push the updated namespace for handling more</span>
+<span class="s">        complicated namespaces, such as IPython Notebook.&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">plastic</span><span class="p">:</span>
-        <span class="c"># turn off plasticity everywhere</span>
-        <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-             <span class="n">sheet</span><span class="o">.</span><span class="n">override_plasticity_state</span><span class="p">(</span><span class="n">new_plasticity_state</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_file</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">apply_output_fns</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">each</span><span class="p">,</span><span class="s">&#39;measure_maps&#39;</span><span class="p">):</span>
-               <span class="k">if</span> <span class="n">each</span><span class="o">.</span><span class="n">measure_maps</span><span class="p">:</span>
-                   <span class="n">each</span><span class="o">.</span><span class="n">apply_output_fns</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="kn">from</span> <span class="nn">topo.misc.commandline</span> <span class="kn">import</span> <span class="n">global_params</span>
+        <span class="n">ns</span> <span class="o">=</span> <span class="n">ns</span> <span class="k">if</span> <span class="n">ns</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">ns</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">global_params</span><span class="o">.</span><span class="n">exec_in_context</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">val</span><span class="p">))</span>
 
-    <span class="c"># Register the inputs on each input sheet</span>
-    <span class="n">generatorsheets</span> <span class="o">=</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">GeneratorSheet</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">generatorsheets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">g</span><span class="o">.</span><span class="n">set_input_generator</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">generatorsheets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">each</span><span class="p">):</span>
-                <span class="n">generatorsheets</span><span class="p">[</span><span class="n">each</span><span class="p">]</span><span class="o">.</span><span class="n">set_input_generator</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="n">each</span><span class="p">])</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="s">&#39;</span><span class="si">%s</span><span class="s"> not a valid Sheet name for pattern_present.&#39;</span> <span class="o">%</span> <span class="n">each</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">source_file</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="s">&quot;&lt;execution&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;exec&quot;</span><span class="p">)</span>
+        <span class="k">exec</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">ns</span> <span class="c">#globals and locals</span>
 
-    <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">event_push</span><span class="p">()</span>
-    <span class="c"># CBENHANCEMENT: would be nice to break this up for visualizing motion</span>
-    <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-    <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">event_pop</span><span class="p">()</span>
-
-    <span class="c"># turn sheets&#39; plasticity and output_fn plasticity back on if we turned it off before</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">plastic</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">sheet</span><span class="o">.</span><span class="n">restore_plasticity_state</span><span class="p">()</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">apply_output_fns</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="n">each</span><span class="o">.</span><span class="n">apply_output_fns</span> <span class="o">=</span> <span class="bp">True</span>
-
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite_previous</span><span class="p">:</span>
-        <span class="n">restore_input_generators</span><span class="p">()</span>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
 
 <span class="c"># This class is left around to support older snapshots: All snapshots</span>
 <span class="c"># since 0.9.7 up until r11545 (addition of UnpickleEnvironmentCreator)</span>
@@ -977,7 +922,49 @@
 <span class="n">PatternDrivenAnalysis</span><span class="o">.</span><span class="n">pre_presentation_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clear_event_queue</span><span class="p">)</span>
 
 
-<span class="c"># maybe an explicit list would be better?</span>
+<div class="viewcode-block" id="pattern_present"><a class="viewcode-back" href="../../Reference_Manual/topo.command-module.html#topo.command.pattern_present">[docs]</a><span class="k">def</span> <span class="nf">pattern_present</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{},</span> <span class="n">duration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">plastic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                    <span class="n">overwrite_previous</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">apply_output_fns</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a set of input patterns (dictionary of</span>
+<span class="sd">    GeneratorSheetName:PatternGenerator pairs), installs them into the</span>
+<span class="sd">    specified GeneratorSheets, runs the simulation for the specified</span>
+<span class="sd">    length of time, then restores the original patterns and the</span>
+<span class="sd">    original simulation time.  Thus this input is not considered part</span>
+<span class="sd">    of the regular simulation, and is usually for testing purposes.</span>
+
+<span class="sd">    As a special case, if &#39;inputs&#39; is just a single pattern, and not</span>
+<span class="sd">    a dictionary, it is presented to all GeneratorSheets.</span>
+
+<span class="sd">    If a simulation is not provided, the active simulation, if one</span>
+<span class="sd">    exists, is requested.</span>
+
+<span class="sd">    If this process is interrupted by the user, the temporary patterns</span>
+<span class="sd">    may still be installed on the retina.</span>
+
+<span class="sd">    If overwrite_previous is true, the given inputs overwrite those</span>
+<span class="sd">    previously defined.</span>
+
+<span class="sd">    If plastic is False, overwrites the existing values of Sheet.plastic</span>
+<span class="sd">    to disable plasticity, then reenables plasticity.</span>
+
+<span class="sd">    In order to to see the sequence of values presented, you may use</span>
+<span class="sd">    the back arrow history mechanism in the GUI. Note that the GUI&#39;s</span>
+<span class="sd">    Activity window must be open and the display parameter set to true</span>
+<span class="sd">    (display=True).</span>
+
+<span class="sd">    Alternatively, the activity response of the sheets may be obtained</span>
+<span class="sd">    from the sheet_views dictionary of the respective sheets.</span>
+
+<span class="sd">    This function is a backward compatibility wrapper of the</span>
+<span class="sd">    measure_response class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">analysis</span> <span class="kn">import</span> <span class="n">measure_response</span>
+    <span class="n">measure_response</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">plastic</span><span class="o">=</span><span class="n">plastic</span><span class="p">,</span>
+                     <span class="n">overwrite_previous</span><span class="o">=</span><span class="n">overwrite_previous</span><span class="p">,</span>
+                     <span class="n">apply_output_fns</span><span class="o">=</span><span class="n">apply_output_fns</span><span class="p">,</span>
+                     <span class="n">restore_state</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">restore_events</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="c"># maybe an explicit list would be better?</span></div>
 <span class="kn">import</span> <span class="nn">types</span>
 <span class="n">_public</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">_k</span> <span class="k">for</span> <span class="n">_k</span><span class="p">,</span><span class="n">_v</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_v</span><span class="p">,</span><span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span><span class="p">)</span> <span class="ow">or</span>
@@ -1066,7 +1053,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

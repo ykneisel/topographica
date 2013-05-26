@@ -57,16 +57,16 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="imagen.transferfn-module.html">imagen.transferfn</a></li>
-<li><a class="reference external" href="imagen.random-module.html">imagen.random</a></li>
-<li><a class="reference external" href="imagen.image-module.html">imagen.image</a></li>
-<li><a class="reference external" href="imagen.patternfn-module.html">imagen.patternfn</a></li>
-<li><a class="reference external" href="imagen.boundingregion-module.html">imagen.boundingregion</a></li>
-<li><a class="reference external" href="imagen.opencvcamera-module.html">imagen.opencvcamera</a></li>
-<li><a class="reference external" href="imagen.patterngenerator-module.html">imagen.patterngenerator</a></li>
-<li><a class="reference external" href="imagen.sheetcoords-module.html">imagen.sheetcoords</a></li>
-<li><a class="reference external" href="imagen.ipython-module.html">imagen.ipython</a></li>
 <li><a class="reference external" href="imagen.audio-module.html">imagen.audio</a></li>
+<li><a class="reference external" href="imagen.random-module.html">imagen.random</a></li>
+<li><a class="reference external" href="imagen.opencvcamera-module.html">imagen.opencvcamera</a></li>
+<li><a class="reference external" href="imagen.boundingregion-module.html">imagen.boundingregion</a></li>
+<li><a class="reference external" href="imagen.ipython-module.html">imagen.ipython</a></li>
+<li><a class="reference external" href="imagen.image-module.html">imagen.image</a></li>
+<li><a class="reference external" href="imagen.transferfn-module.html">imagen.transferfn</a></li>
+<li><a class="reference external" href="imagen.sheetcoords-module.html">imagen.sheetcoords</a></li>
+<li><a class="reference external" href="imagen.patternfn-module.html">imagen.patternfn</a></li>
+<li><a class="reference external" href="imagen.patterngenerator-module.html">imagen.patterngenerator</a></li>
 </ul>
 </div>
 <div class="section" id="module">
@@ -86,8 +86,8 @@ combined with the existing classes easily.</p>
 with parameters (orientation, size, scale and offset) that can be
 changed independently.</p>
 <dl class="docutils">
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientationsurround</span></tt> (<em>allow_None=False, bounds=(0.0, 6.283185307179586), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>Orientation of the surround grating.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientationsurround</span></tt> (<em>allow_None=False, bounds=(-6.283185307179586, 6.283185307179586), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>Orientation of the surround grating, either absolute or relative to the central grating.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientation</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.4, readonly=False, time_fn=None</em>)</dt>
 <dd>Polar angle of pattern, i.e., the orientation in the Cartesian coordinate
         system, with zero at 3 o&#8217;clock and increasing counterclockwise.</dd>
@@ -95,8 +95,8 @@ changed independently.</p>
 <dd>Frequency of the sine grating.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientationcenter</span></tt> (<em>allow_None=False, bounds=(0.0, 6.283185307179586), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Orientation of the center grating.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">thickness</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.015, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>Thickness (line width) of the ring.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">smoothing</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>Width of the Gaussian fall-off inside and outside the ring.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">ydensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the y direction.
         Typically the same as the xdensity.</dd>
@@ -113,18 +113,18 @@ changed independently.</p>
         (and thus only position OR x and y need to be specified).</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offsetsurround</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Offset of the surround grating.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">smoothing</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>Width of the Gaussian fall-off inside and outside the ring.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">thickness</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.015, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>Thickness (line width) of the ring.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">sizecenter</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.5, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Size of the center grating.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.5, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.3, readonly=False, time_fn=None</em>)</dt>
 <dd>Determines the overall size of the pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
-<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">sizesurround</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Size of the surround grating.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
+<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">phase</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.51, readonly=False, time_fn=None</em>)</dt>
@@ -147,6 +147,8 @@ changed independently.</p>
         the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">x</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.2, readonly=False, time_fn=None</em>)</dt>
 <dd>X-coordinate location of pattern center.</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">surround_orientation_relative</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Determines whether the surround grating is relative to the central grating.</dd>
 </dl>
 </dd></dl>
 
@@ -192,10 +194,10 @@ the mirror image of the other, and the peaks of the gaussians are movable.</p>
 <dd>Determines the overall size of the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">positive_y_shape</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.35, inclusive_bounds=(False, False), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>The length of the tail along the y axis for the positive LogGaussian pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
-<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">negative_size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.8, inclusive_bounds=(True, False), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Size of the negative LogGaussian pattern.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
+<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">sigmoid_slope</span></tt> (<em>allow_None=False, bounds=(None, None), constant=False, default=50.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
@@ -263,14 +265,14 @@ a 2D representation of a fixed-width spectrogram.</p>
         You may also supply your own.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">max_frequency</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=9999, inclusive_bounds=(False, False), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Largest frequency for which to return an amplitude.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
@@ -283,7 +285,7 @@ a 2D representation of a fixed-width spectrogram.</p>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">ydensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the y direction.
         Typically the same as the xdensity.</dd>
-<dt><em>param TimeSeriesParam</em> <tt class="docutils literal"><span class="pre">signal</span></tt> (<em>allow_None=False, constant=False, default=&lt;TimeSeries TimeSeries00007&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param TimeSeriesParam</em> <tt class="docutils literal"><span class="pre">signal</span></tt> (<em>allow_None=False, constant=False, default=&lt;TimeSeries TimeSeries00008&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>A TimeSeries object on which to perfom the Fourier Transform.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Determines the overall size of the pattern.</dd>
@@ -323,10 +325,10 @@ a 2D representation of a fixed-width spectrogram.</p>
 <dd>Ratio of width to height for the negative region of the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.3, readonly=False, time_fn=None</em>)</dt>
 <dd>Determines the overall size of the pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
-<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">negative_size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.3, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=5, readonly=False, time_fn=None</em>)</dt>
 <dd>Size of the negative region of the pattern.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
+<dd>Y-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">negative_y</span></tt> (<em>allow_None=False, bounds=(None, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=8, readonly=False, time_fn=None</em>)</dt>
 <dd>Y position for the central peak of the negative region.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
@@ -388,12 +390,12 @@ translated, etc. uniformly.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -459,12 +461,12 @@ may depend on the matrix dimensions.</p>
 <dd>Width of the Gaussian fall-off outside the rectangle.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -493,7 +495,7 @@ perpendicular to its orientation.</p>
 <dd>X-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
 <dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
-<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">generator</span></tt> (<em>constant=False, default=&lt;Gaussian Gaussian00000&gt;, instantiate=False, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">generator</span></tt> (<em>constant=False, default=&lt;Gaussian Gaussian00001&gt;, instantiate=False, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
 <dd>Pattern to sweep.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientation</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.4, readonly=False, time_fn=None</em>)</dt>
 <dd>Polar angle of pattern, i.e., the orientation in the Cartesian coordinate
@@ -506,15 +508,15 @@ perpendicular to its orientation.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">step</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Number of steps at the given speed to move in the sweep direction.
         The distance moved is speed*step.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -595,15 +597,15 @@ single pattern that it returns.</p>
                   return x[0]</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(0, None), constant=False, default=[Constant(bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Constant00001&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.0, 0.0], print_level=100, scale=0.0, size=1.0, x=0.0, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
-<dd>List of patterns to use in the composite pattern.  The default is
-        a blank pattern, and should thus be overridden for any useful work.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(0, None), constant=False, default=[Constant(bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Constant00002&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.0, 0.0], scale=0.0, size=1.0, x=0.0, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
+<dd>List of patterns to use in the composite pattern.  The default is
+        a blank pattern, and should thus be overridden for any useful work.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -642,7 +644,7 @@ single pattern that it returns.</p>
 <dd>X-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
 <dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">index</span></tt> (<em>allow_None=False, bounds=(-1.0, 1.0), constant=False, default=&lt;UniformRandom UniformRandom00004&gt;, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=0.2, readonly=False, time_fn=None</em>)</dt>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">index</span></tt> (<em>allow_None=False, bounds=(-1.0, 1.0), constant=False, default=&lt;UniformRandom UniformRandom00005&gt;, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=0.2, readonly=False, time_fn=None</em>)</dt>
 <dd>Index into the list of pattern generators, on a scale from 0
         (start of the list) to 1.0 (end of the list).  Typically a
         random value or other number generator, to allow a different item
@@ -658,14 +660,14 @@ single pattern that it returns.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(1, None), constant=False, default=[Disk(aspect_ratio=0.5, bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Disk00002&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[-0.3, 0.0], print_level=100, scale=1.0, size=0.5, smoothing=0.1, x=-0.3, xdensity=10, y=0.0, ydensity=10), Rectangle(aspect_ratio=0.5, bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Rectangle00003&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.3, 0.0], print_level=100, scale=1.0, size=0.5, smoothing=0.05, x=0.3, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
-<dd>List of patterns from which to select.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(1, None), constant=False, default=[Disk(aspect_ratio=0.5, bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Disk00003&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[-0.3, 0.0], scale=1.0, size=0.5, smoothing=0.1, x=-0.3, xdensity=10, y=0.0, ydensity=10), Rectangle(aspect_ratio=0.5, bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Rectangle00004&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.3, 0.0], scale=1.0, size=0.5, smoothing=0.05, x=0.3, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
+<dd>List of patterns from which to select.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -714,61 +716,61 @@ to 0 to get motion perpendicular to the generator&#8217;s orientation
 cannot be passed in when the instance is called; only the values
 set on the instance are used.</p>
 <dl class="docutils">
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">x</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.2, readonly=False, time_fn=None</em>)</dt>
+<dd>X-coordinate location of pattern center.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">direction</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>The direction in which the pattern should move, in radians.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
+<dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">generator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Gaussian Gaussian00006&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Pattern to be translated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientation</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.4, readonly=False, time_fn=None</em>)</dt>
 <dd>Polar angle of pattern, i.e., the orientation in the Cartesian coordinate
         system, with zero at 3 o&#8217;clock and increasing counterclockwise.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">episode_interval</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>Interval between successive translation episodes.
-
-        If nonzero, the episode_separator pattern is presented for
-        this amount of time_fn time after each episode, e.g. to
-        allow processing of the previous episode to complete.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">episode_separator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Constant Constant00006&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Pattern to display during the episode_interval, if any.
-         The default is a blank pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">speed</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.01, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>The speed with which the pattern should move,
-        in sheet coordinates per time_fn unit.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">ydensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
-<dd>Density (number of samples per 1.0 length) in the y direction.
-        Typically the same as the xdensity.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
-<dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">generator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Gaussian Gaussian00005&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Pattern to be translated.</dd>
-<dt><em>param Composite</em> <tt class="docutils literal"><span class="pre">position</span></tt> (<em>attribs=[&#8216;x&#8217;, &#8216;y&#8217;], constant=False, default=None, instantiate=False, objtype=&lt;class &#8216;imagen.patterngenerator.PatternGenerator&#8217;&gt;, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
-<dd>Coordinates of location of pattern center.
-        Provides a convenient way to set the x and y parameters together
-        as a tuple (x,y), but shares the same actual storage as x and y
-        (and thus only position OR x and y need to be specified).</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
-<dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.3, readonly=False, time_fn=None</em>)</dt>
-<dd>Determines the overall size of the pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">direction</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>The direction in which the pattern should move, in radians.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
-<dd>Y-coordinate location of pattern center.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
-<dd>Additive offset to input pattern, defaulting to 0.0</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">reset_period</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>Period between generating each new translation episode.</dd>
 <dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">mask</span></tt> (<em>constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
 <dd>Optional object (expected to be an array) with which to multiply the
         pattern array after it has been created, before any output_fns are
         applied. This can be used to shape the pattern.</dd>
 <dt><em>param BoundingRegionParameter</em> <tt class="docutils literal"><span class="pre">bounds</span></tt> (<em>constant=False, default=BoundingBox(radius=0.5), instantiate=True, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">episode_interval</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>Interval between successive translation episodes.
+
+        If nonzero, the episode_separator pattern is presented for
+        this amount of time_fn time after each episode, e.g. to
+        allow processing of the previous episode to complete.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
+<dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">time_fn</span></tt> (<em>constant=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Function to generate the time used as a base for translation.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">reset_period</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>Period between generating each new translation episode.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">x</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.2, readonly=False, time_fn=None</em>)</dt>
-<dd>X-coordinate location of pattern center.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">episode_separator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Constant Constant00007&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Pattern to display during the episode_interval, if any.
+         The default is a blank pattern.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
+<dd>Additive offset to input pattern, defaulting to 0.0</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
+<dd>Y-coordinate location of pattern center.</dd>
+<dt><em>param Composite</em> <tt class="docutils literal"><span class="pre">position</span></tt> (<em>attribs=[&#8216;x&#8217;, &#8216;y&#8217;], constant=False, default=None, instantiate=False, objtype=&lt;class &#8216;imagen.patterngenerator.PatternGenerator&#8217;&gt;, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
+<dd>Coordinates of location of pattern center.
+        Provides a convenient way to set the x and y parameters together
+        as a tuple (x,y), but shares the same actual storage as x and y
+        (and thus only position OR x and y need to be specified).</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">ydensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
+<dd>Density (number of samples per 1.0 length) in the y direction.
+        Typically the same as the xdensity.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">speed</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.01, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>The speed with which the pattern should move,
+        in sheet coordinates per time_fn unit.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.3, readonly=False, time_fn=None</em>)</dt>
+<dd>Determines the overall size of the pattern.</dd>
 </dl>
 <dl class="staticmethod">
 <dt id="imagen.Translator.time_fn">
@@ -813,12 +815,12 @@ xscale=yscale*aspect_ratio</div></blockquote>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -859,12 +861,12 @@ xscale=yscale*aspect_ratio</div></blockquote>
 <dd>Thickness (width) of the solid central part of the line.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -914,12 +916,12 @@ mathematically this is the mean term.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -962,14 +964,14 @@ mathematically this is the mean term.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">frequency</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=2.4, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.5, readonly=False, time_fn=None</em>)</dt>
 <dd>Frequency of the square grating.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1026,12 +1028,12 @@ mathematically this is the mean term.</p>
 <dd>Width of the Gaussian fall-off outside the rectangle.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1075,14 +1077,14 @@ mathematically this is the mean term.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">phase</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.51, readonly=False, time_fn=None</em>)</dt>
 <dd>Phase of the sine grating component.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1131,16 +1133,14 @@ for convex.</p>
 <dd>X-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
 <dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">arc_length</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1.0, readonly=False, time_fn=None</em>)</dt>
-<dd>Length of the arc, in radians, starting from orientation 0.0.</dd>
+<dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">size_type</span></tt> (<em>check_on_set=True, compute_default_fn=None, constant=False, default=constant_length, instantiate=False, objects=[&#8216;constant_length&#8217;, &#8216;constant_width&#8217;], pickle_default_value=True, precedence=0.61, readonly=False</em>)</dt>
+<dd>For a given size, whether to draw a curve with that total length,
+        or with that width, keeping it constant as curvature is varied.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientation</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.4, readonly=False, time_fn=None</em>)</dt>
 <dd>Polar angle of pattern, i.e., the orientation in the Cartesian coordinate
         system, with zero at 3 o&#8217;clock and increasing counterclockwise.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">aspect_ratio</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1.0, readonly=False, time_fn=None</em>)</dt>
 <dd>Ratio of width to height; size*aspect_ratio gives the overall width.</dd>
-<dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">size_type</span></tt> (<em>check_on_set=True, compute_default_fn=None, constant=False, default=constant_length, instantiate=False, objects=[&#8216;constant_length&#8217;, &#8216;constant_width&#8217;], pickle_default_value=True, precedence=0.61, readonly=False</em>)</dt>
-<dd>For a given size, whether to draw a curve with that total length,
-        or with that width, keeping it constant as curvature is varied.</dd>
 <dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">mask</span></tt> (<em>constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
 <dd>Optional object (expected to be an array) with which to multiply the
         pattern array after it has been created, before any output_fns are
@@ -1153,15 +1153,17 @@ for convex.</p>
 <dd>Width of the Gaussian fall-off inside and outside the ring.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">curvature</span></tt> (<em>allow_None=False, bounds=(-0.5, 0.5), constant=False, default=0.5, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.62, readonly=False, time_fn=None</em>)</dt>
 <dd>Ratio of height to width of the arc, with positive value giving
         a concave shape and negative value giving convex.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">arc_length</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1.0, readonly=False, time_fn=None</em>)</dt>
+<dd>Length of the arc, in radians, starting from orientation 0.0.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1203,12 +1205,12 @@ with optional Gaussian smoothing.</p>
 <dd>Width of the Gaussian fall-off.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1254,12 +1256,12 @@ appearing as a corner or cross.</p>
 <dd>Where the two Gaussians cross, as a fraction of their half length</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=(-1.0, 1.0), constant=False, default=-0.15, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1301,12 +1303,12 @@ patterns pixel by pixel.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1355,12 +1357,12 @@ the point on the circle before stretching that was closest to P.</p>
 <dd>Width of the Gaussian fall-off</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1399,12 +1401,12 @@ the point on the circle before stretching that was closest to P.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1447,12 +1449,12 @@ and negative halves with a smoothly sloping transition between them.</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1503,12 +1505,12 @@ such that one part of the plane can be the mirror image of the other.</p>
             high values give a sharp transition.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1560,12 +1562,12 @@ xsigma=ysigma*aspect_ratio</div></blockquote>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1608,14 +1610,14 @@ xsigma=ysigma*aspect_ratio</div></blockquote>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">frequency</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=2.4, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.5, readonly=False, time_fn=None</em>)</dt>
 <dd>Frequency of the sine grating.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1654,8 +1656,6 @@ centered at the center of the ring.</p>
 <dd>X-coordinate location of pattern center.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.1, readonly=False, time_fn=None</em>)</dt>
 <dd>Multiplicative strength of input pattern, defaulting to 1.0</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">arc_length</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=3.14159265359, inclusive_bounds=(True, False), instantiate=False, pickle_default_value=True, precedence=0.62, readonly=False, time_fn=None</em>)</dt>
-<dd>Length of the arc, in radians, starting from orientation 0.0.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">orientation</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.4, readonly=False, time_fn=None</em>)</dt>
 <dd>Polar angle of pattern, i.e., the orientation in the Cartesian coordinate
         system, with zero at 3 o&#8217;clock and increasing counterclockwise.</dd>
@@ -1673,12 +1673,14 @@ centered at the center of the ring.</p>
 <dd>Width of the Gaussian fall-off inside and outside the ring.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">arc_length</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=3.14159265359, inclusive_bounds=(True, False), instantiate=False, pickle_default_value=True, precedence=0.62, readonly=False, time_fn=None</em>)</dt>
+<dd>Length of the arc, in radians, starting from orientation 0.0.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1736,14 +1738,14 @@ arranged into a spectrogram, e.g. for an audio signal.</p>
         You may also supply your own.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
+<dd>Optional PatternGenerator used to construct a mask to be applied to
+        the pattern.</dd>
 <dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
 <dd>Optional function(s) to apply to the pattern array after it has been created.
         Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">max_frequency</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=9999, inclusive_bounds=(False, False), instantiate=False, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>Largest frequency for which to return an amplitude.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
-<dd>Optional PatternGenerator used to construct a mask to be applied to
-        the pattern.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
@@ -1756,7 +1758,7 @@ arranged into a spectrogram, e.g. for an audio signal.</p>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">ydensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the y direction.
         Typically the same as the xdensity.</dd>
-<dt><em>param TimeSeriesParam</em> <tt class="docutils literal"><span class="pre">signal</span></tt> (<em>allow_None=False, constant=False, default=&lt;TimeSeries TimeSeries00007&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param TimeSeriesParam</em> <tt class="docutils literal"><span class="pre">signal</span></tt> (<em>allow_None=False, constant=False, default=&lt;TimeSeries TimeSeries00008&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>A TimeSeries object on which to perfom the Fourier Transform.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">size</span></tt> (<em>allow_None=False, bounds=(0.0, None), constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Determines the overall size of the pattern.</dd>
@@ -1834,15 +1836,15 @@ support maximum spacing also (and both at once).</p>
         the distances being greater along the diagonals.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(0, None), constant=False, default=[Constant(bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Constant00001&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.0, 0.0], print_level=100, scale=0.0, size=1.0, x=0.0, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
-<dd>List of patterns to use in the composite pattern.  The default is
-        a blank pattern, and should thus be overridden for any useful work.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">generators</span></tt> (<em>bounds=(0, None), constant=False, default=[Constant(bounds=BoundingBox(radius=0.5), mask=None, mask_shape=None, name=&#8217;Constant00002&#8217;, offset=0.0, orientation=0.0, output_fns=[], position=[0.0, 0.0], scale=0.0, size=1.0, x=0.0, xdensity=10, y=0.0, ydensity=10)], instantiate=True, pickle_default_value=True, precedence=0.97, readonly=False</em>)</dt>
+<dd>List of patterns to use in the composite pattern.  The default is
+        a blank pattern, and should thus be overridden for any useful work.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1886,12 +1888,12 @@ support maximum spacing also (and both at once).</p>
 <dd>Thickness (line width) of the ring.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -1932,12 +1934,12 @@ support maximum spacing also (and both at once).</p>
 <dd>BoundingBox of the area in which the pattern is generated.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">xdensity</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=10, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=-1, readonly=False, time_fn=None</em>)</dt>
 <dd>Density (number of samples per 1.0 length) in the x direction.</dd>
-<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
-<dd>Optional function(s) to apply to the pattern array after it has been created.
-        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">mask_shape</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=True, pickle_default_value=True, precedence=0.06, readonly=False</em>)</dt>
 <dd>Optional PatternGenerator used to construct a mask to be applied to
         the pattern.</dd>
+<dt><em>param HookList</em> <tt class="docutils literal"><span class="pre">output_fns</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=0.08, readonly=False</em>)</dt>
+<dd>Optional function(s) to apply to the pattern array after it has been created.
+        Can be used for normalization, thresholding, etc.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">offset</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.11, readonly=False, time_fn=None</em>)</dt>
 <dd>Additive offset to input pattern, defaulting to 0.0</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">y</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=0.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=0.21, readonly=False, time_fn=None</em>)</dt>
@@ -2031,7 +2033,7 @@ support maximum spacing also (and both at once).</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

@@ -342,6 +342,11 @@
 
 
     <span class="k">def</span> <span class="nf">_get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If necessary as indicated by the parameters, get a new image,</span>
+<span class="sd">        assign it to self._image and return True.  If no new image is</span>
+<span class="sd">        needed, return False.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="c"># CEB: not currently possible, because _get_image needs access to p</span>
@@ -418,24 +423,44 @@
 
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create the last_filename attribute, used to hold the last</span>
-<span class="sd">        filename. This allows reloading an existing image to be</span>
-<span class="sd">        avoided.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FileImage</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="c"># Saves the last filename loaded, to avoid unnecessary reloading</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="o">=</span> <span class="bp">None</span>
 
 
     <span class="k">def</span> <span class="nf">_get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        If necessary as indicated by the parameters, get a new image,</span>
-<span class="sd">        assign it to self._image and return True.  If no new image is</span>
-<span class="sd">        needed, return False.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">filename</span><span class="o">!=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">filename</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="o">=</span> <span class="n">ImageOps</span><span class="o">.</span><span class="n">grayscale</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span>
+
+
+</div>
+<div class="viewcode-block" id="NumpyFile"><a class="viewcode-back" href="../../Reference_Manual/imagen.image-module.html#imagen.image.NumpyFile">[docs]</a><span class="k">class</span> <span class="nc">NumpyFile</span><span class="p">(</span><span class="n">GenericImage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Read an array from a Numpy-format file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Filename</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&#39;images/numpy_array_feret_photo.npy&#39;</span><span class="p">,</span><span class="n">precedence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        File path (can be relative to Param&#39;s base path) to the Numpy file.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c"># Inherits from GenericImage, overriding defaults to disable rescaling</span>
+    <span class="n">pattern_sampler</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="n">ImageSampler</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">PatternSampler</span><span class="p">(</span><span class="n">background_value_fn</span><span class="o">=</span><span class="n">edge_average</span><span class="p">,</span>
+                               <span class="n">size_normalization</span><span class="o">=</span><span class="s">&#39;original&#39;</span><span class="p">,</span>
+                               <span class="n">whole_pattern_output_fns</span><span class="o">=</span><span class="p">[]))</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NumpyFile</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="c"># Saves the last filename loaded, to avoid unnecessary reloading</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+    <span class="k">def</span> <span class="nf">_get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">filename</span><span class="o">!=</span><span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">filename</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">load</span><span class="p">((</span><span class="n">p</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image</span></div>
 </pre></div>
 
@@ -510,7 +535,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

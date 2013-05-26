@@ -198,23 +198,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filesaver</span> <span class="o">=</span> <span class="n">PlotGroupSaver</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-        <span class="c"># In the future, it might be good to be able to specify the</span>
-        <span class="c"># plot rows and columns using tuples.  For instance, if three</span>
-        <span class="c"># columns are desired with the plots laid out from left to</span>
-        <span class="c"># right, we could use (None, 3).  If three rows are desired</span>
-        <span class="c"># then (3, None).  Another method that would work is [3,2,4]</span>
-        <span class="c"># would have the first row with 3, the second row with 2, the</span>
-        <span class="c"># third row with 4, etc.  The default left-to-right ordering</span>
-        <span class="c"># in one row could perhaps be represented as (None, Inf).</span>
-        <span class="c">#</span>
-        <span class="c"># Alternatively, we could add another precedence value, so</span>
-        <span class="c"># that the usual precedence value controls where the plot</span>
-        <span class="c"># appears left to right, while a rowprecedence value would</span>
-        <span class="c"># control where it appears top to bottom.  All plots with the</span>
-        <span class="c"># same rowprecedence would go on the same row, and the actual</span>
-        <span class="c"># value of the rowprecedence would determine which row goes</span>
-        <span class="c"># first.</span>
-
 
     <span class="k">def</span> <span class="nf">_exec_pre_plot_hooks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_plot_hooks</span><span class="p">:</span>
@@ -1452,7 +1435,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

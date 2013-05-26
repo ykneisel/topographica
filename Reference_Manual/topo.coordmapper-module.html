@@ -71,14 +71,16 @@ CoordinateMapperFn.</p>
 <dd><p>Bases: <a class="reference internal" href="#topo.coordmapper.SingleDimensionMapper" title="topo.coordmapper.SingleDimensionMapper"><tt class="xref py py-class docutils literal"><span class="pre">topo.coordmapper.SingleDimensionMapper</span></tt></a></p>
 <p>Provides a mapping that reduces the center of the activity.</p>
 <p>Roughly the inverse of MagnifyingMapper.  k indicates amount of reduction.</p>
+<dl class="docutils">
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">in_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The maximum range of the mapping input.</dd>
+</dl>
 <p><em>param Number</em> <tt class="docutils literal"><span class="pre">k</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</p>
 <dl class="docutils">
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">out_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The maximum range of the output.</dd>
 <dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">remap_dimension</span></tt> (<em>check_on_set=True, compute_default_fn=None, constant=False, default=radius, instantiate=False, objects=[&#8216;radius&#8217;, &#8216;x&#8217;, &#8216;y&#8217;, &#8216;xy&#8217;], pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The dimension to remap. (&#8216;xy&#8217; remaps x and y independently.)</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">in_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The maximum range of the mapping input.</dd>
 </dl>
 </dd></dl>
 
@@ -113,7 +115,7 @@ CoordinateMapperFn.</p>
 <dl class="docutils">
 <dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">scale</span></tt> (<em>constant=False, default=0.0, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Amount of jitter.</dd>
-<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">gen</span></tt> (<em>constant=False, default=&lt;UniformRandom UniformRandom00246&gt;, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">gen</span></tt> (<em>constant=False, default=&lt;UniformRandom UniformRandom00250&gt;, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Number generator to use, typically a random distribution.</dd>
 </dl>
 </dd></dl>
@@ -124,12 +126,12 @@ CoordinateMapperFn.</p>
 <dd><p>Bases: <a class="reference internal" href="topo.base.functionfamily-module.html#topo.base.functionfamily.CoordinateMapperFn" title="topo.base.functionfamily.CoordinateMapperFn"><tt class="xref py py-class docutils literal"><span class="pre">topo.base.functionfamily.CoordinateMapperFn</span></tt></a></p>
 <p>Maps from Cartesian (x,y) to polar (radius,angle).</p>
 <dl class="docutils">
-<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">degrees</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Indicates whether the output angle is in degrees or radians.</dd>
 <dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">negative_radii</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>If true, coordinates with negative x values will be
         given negative radii, and angles between -90 and 90
         degrees. (useful for mapping to saccade amplitude/direction space)</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">degrees</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Indicates whether the output angle is in degrees or radians.</dd>
 </dl>
 </dd></dl>
 
@@ -149,12 +151,12 @@ the x-negative hemisheet.</p>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">mm_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=8.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor to convert constants Bu and Bv from mm to sheet
        units.  Expressed in mm/unit.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">direction_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor for saccade command direction, expressed in
         degrees per unit of sheet.  Indicates what direction of saccade
         is represented by the y-component of the command input.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bv</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Orthogonal (medial-lateral?) scale paraemter in mm/deg</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">amplitude_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
@@ -171,7 +173,7 @@ the x-negative hemisheet.</p>
 <dd><p>Bases: <a class="reference internal" href="topo.base.functionfamily-module.html#topo.base.functionfamily.CoordinateMapperFn" title="topo.base.functionfamily.CoordinateMapperFn"><tt class="xref py py-class docutils literal"><span class="pre">topo.base.functionfamily.CoordinateMapperFn</span></tt></a></p>
 <p>Additively modifies calculated x,y coordinates with Gaussian random noise.</p>
 <dl class="docutils">
-<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">gen</span></tt> (<em>constant=False, default=&lt;NormalRandom NormalRandom00247&gt;, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">gen</span></tt> (<em>constant=False, default=&lt;NormalRandom NormalRandom00251&gt;, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Number generator to use, typically a Gaussian distribution.</dd>
 </dl>
 </dd></dl>
@@ -208,14 +210,16 @@ the x-negative hemisheet.</p>
 <p>Provides a mapping that magnifies the center of the activity image.
 Parameter k indicates amount of magnification, where 0 means no
 magnification.</p>
+<dl class="docutils">
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">in_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The maximum range of the mapping input.</dd>
+</dl>
 <p><em>param Number</em> <tt class="docutils literal"><span class="pre">k</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=1.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</p>
 <dl class="docutils">
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">out_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The maximum range of the output.</dd>
 <dt><em>param ObjectSelector</em> <tt class="docutils literal"><span class="pre">remap_dimension</span></tt> (<em>check_on_set=True, compute_default_fn=None, constant=False, default=radius, instantiate=False, objects=[&#8216;radius&#8217;, &#8216;x&#8217;, &#8216;y&#8217;, &#8216;xy&#8217;], pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The dimension to remap. (&#8216;xy&#8217; remaps x and y independently.)</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">in_range</span></tt> (<em>allow_None=False, bounds=(0, None), constant=False, default=0.707106781187, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The maximum range of the mapping input.</dd>
 </dl>
 </dd></dl>
 
@@ -324,12 +328,12 @@ from Ottes et al. (1986) Vision Research 26:857-873.</p>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">mm_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=8.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor to convert constants Bu and Bv from mm to sheet
        units.  Expressed in mm/unit.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">direction_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor for saccade command direction, expressed in
         degrees per unit of sheet.  Indicates what direction of saccade
         is represented by the y-component of the command input.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bv</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Orthogonal (medial-lateral?) scale paraemter in mm/deg</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">amplitude_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
@@ -379,12 +383,12 @@ the x-negative hemisheet.</p>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">mm_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=8.0, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor to convert constants Bu and Bv from mm to sheet
        units.  Expressed in mm/unit.</dd>
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">direction_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Scale factor for saccade command direction, expressed in
         degrees per unit of sheet.  Indicates what direction of saccade
         is represented by the y-component of the command input.</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bu</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Rostral-caudal scale parameter, in mm</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">Bv</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1.8, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Orthogonal (medial-lateral?) scale paraemter in mm/deg</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">amplitude_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=1, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
@@ -477,7 +481,7 @@ the x-negative hemisheet.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

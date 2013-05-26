@@ -375,6 +375,23 @@
 
 <span class="n">support</span><span class="p">[</span><span class="mi">12089</span><span class="p">]</span> <span class="o">=</span> <span class="n">moved_picklableclassattributes</span>
 
+
+<span class="k">def</span> <span class="nf">LISSOM_moved_to_SettlingCFSheet</span><span class="p">():</span>
+    <span class="c"># For snapshots saved before 90800126</span>
+    
+    <span class="kn">import</span> <span class="nn">topo.sheet.lissom</span>
+    <span class="kn">import</span> <span class="nn">topo.sheet.optimized</span>
+    <span class="k">def</span> <span class="nf">_LISSOM_move_private_params_to_SettlingCFSheet</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span><span class="n">state</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s">&#39;_SettlingCFSheet__counter_stack&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span> <span class="ow">and</span> <span class="s">&#39;_LISSOM__counter_stack&#39;</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+            <span class="n">state</span><span class="p">[</span><span class="s">&#39;_SettlingCFSheet__counter_stack&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">state</span><span class="p">[</span><span class="s">&#39;_LISSOM__counter_stack&#39;</span><span class="p">]</span>
+            <span class="k">del</span> <span class="n">state</span><span class="p">[</span><span class="s">&#39;_LISSOM__counter_stack&#39;</span><span class="p">]</span>
+
+    <span class="n">preprocess_state</span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">lissom</span><span class="o">.</span><span class="n">LISSOM</span><span class="p">,</span><span class="n">_LISSOM_move_private_params_to_SettlingCFSheet</span><span class="p">)</span>
+    <span class="n">preprocess_state</span><span class="p">(</span><span class="n">topo</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">optimized</span><span class="o">.</span><span class="n">LISSOM_Opt</span><span class="p">,</span><span class="n">_LISSOM_move_private_params_to_SettlingCFSheet</span><span class="p">)</span>
+
+<span class="n">support</span><span class="p">[</span><span class="mi">90800126</span><span class="p">]</span> <span class="o">=</span> <span class="n">LISSOM_moved_to_SettlingCFSheet</span>
+
+
 <span class="k">def</span> <span class="nf">removed_JointScaling</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">zeros</span><span class="p">,</span><span class="n">ones</span>
     <span class="kn">import</span> <span class="nn">copy</span>
@@ -579,7 +596,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

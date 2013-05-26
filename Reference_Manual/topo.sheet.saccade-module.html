@@ -108,7 +108,7 @@ superior colliculus: a quantitative model.  Vision Research;
             actual value of this Parameter is not adjusted, but the
             true bounds may be found from the &#8216;bounds&#8217; attribute
             of this object.</dd>
-<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">mask</span></tt> (<em>constant=False, default=&lt;SheetMask SheetMask00019&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param Parameter</em> <tt class="docutils literal"><span class="pre">mask</span></tt> (<em>constant=False, default=&lt;SheetMask SheetMask00023&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>SheetMask object for computing which units need to be computed further.
         The object should be an instance of SheetMask, and will
         compute which neurons will be considered active for the
@@ -127,9 +127,8 @@ superior colliculus: a quantitative model.  Vision Research;
 <dd>Setting this to False tells the Sheet not to change its
             permanent state (e.g. any connection weights) based on
             incoming events.</dd>
-<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">decode_fn</span></tt> (<em>constant=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The function for extracting a single point from sheet activity.
-        Should take a sheet as the first argument, and return (x,y).</dd>
+<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">measure_maps</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Whether to include this Sheet when measuring various maps to create SheetViews.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">nominal_density</span></tt> (<em>allow_None=False, bounds=None, constant=True, default=10, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>User-specified number of processing units per 1.0 distance
             horizontally or vertically in Sheet coordinates. The actual
@@ -151,14 +150,15 @@ superior colliculus: a quantitative model.  Vision Research;
         processing. Whether or not the units will actually be skipped
         depends on the implementation of learning and learning output
         functions.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">command_mapper</span></tt> (<em>allow_None=False, constant=False, default=&lt;IdentityMF IdentityMF00275&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">command_mapper</span></tt> (<em>allow_None=False, constant=False, default=&lt;IdentityMF IdentityMF00280&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>A CoordinateMapperFn that will be applied to the command vector extracted
         from the sheet activity.</dd>
 <dt><em>param NumericTuple</em> <tt class="docutils literal"><span class="pre">layout_location</span></tt> (<em>constant=False, default=(-1, -1), instantiate=False, length=2, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
 <dd>Location for this Sheet in an arbitrary pixel-based space
             in which Sheets can be laid out for visualization.</dd>
-<dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">measure_maps</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=False, default=True, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Whether to include this Sheet when measuring various maps to create SheetViews.</dd>
+<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">decode_fn</span></tt> (<em>constant=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The function for extracting a single point from sheet activity.
+        Should take a sheet as the first argument, and return (x,y).</dd>
 </dl>
 <dl class="staticmethod">
 <dt id="topo.sheet.saccade.SaccadeController.decode_fn">
@@ -241,7 +241,7 @@ saccade bounds limits the region within which the saccades may occur.</p>
 <dt><em>param NumericTuple</em> <tt class="docutils literal"><span class="pre">layout_location</span></tt> (<em>constant=False, default=(-1, -1), instantiate=False, length=2, pickle_default_value=True, precedence=-1, readonly=False</em>)</dt>
 <dd>Location for this Sheet in an arbitrary pixel-based space
             in which Sheets can be laid out for visualization.</dd>
-<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">input_generator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Constant Constant00036&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">input_generator</span></tt> (<em>allow_None=False, constant=False, default=&lt;Constant Constant00040&gt;, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Specifies a particular PatternGenerator type to use when creating patterns.</dd>
 <dt><em>param Number</em> <tt class="docutils literal"><span class="pre">visual_angle_scale</span></tt> (<em>allow_None=False, bounds=None, constant=False, default=90, inclusive_bounds=(True, True), instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The scale factor determining the visual angle subtended by this sheet, in
@@ -372,7 +372,7 @@ the sheet activity.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

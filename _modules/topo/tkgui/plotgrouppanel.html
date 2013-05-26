@@ -469,12 +469,12 @@
 
 
     <span class="nd">@with_busy_cursor</span>
-    <span class="k">def</span> <span class="nf">refresh_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">refresh_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Call plotgroup&#39;s make_plots with update=True (i.e. run</span>
 <span class="sd">        pre_plot_hooks and plot_hooks), then display the result.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plotgroup</span><span class="o">.</span><span class="n">make_plots</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plotgroup</span><span class="o">.</span><span class="n">make_plots</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_plot_frame</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_to_plotgroups_history</span><span class="p">()</span>
 
@@ -1069,7 +1069,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

@@ -68,7 +68,7 @@
 <span class="kn">from</span> <span class="nn">topo.base.projection</span> <span class="kn">import</span> <span class="n">NeighborhoodMask</span>
 <span class="kn">from</span> <span class="nn">topo.misc.inlinec</span> <span class="kn">import</span> <span class="n">inline</span><span class="p">,</span><span class="n">provide_unoptimized_equivalent</span><span class="p">,</span><span class="n">c_header</span>
 <span class="kn">from</span> <span class="nn">topo.sheet</span> <span class="kn">import</span> <span class="n">SettlingCFSheet</span>
-<span class="kn">from</span> <span class="nn">topo.sheet</span> <span class="kn">import</span> <span class="n">compute_joint_norm_totals</span>  <span class="c"># pyflakes:ignore (replaced by optimized version)</span>
+<span class="kn">from</span> <span class="nn">topo.sheet</span> <span class="kn">import</span> <span class="n">compute_joint_norm_totals</span>  <span class="c"># pyflakes:ignore (optimized version provided)</span>
 
 <span class="k">def</span> <span class="nf">compute_joint_norm_totals_opt</span><span class="p">(</span><span class="n">projlist</span><span class="p">,</span><span class="n">active_units_mask</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -309,7 +309,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

@@ -107,6 +107,7 @@
 <span class="kn">from</span> <span class="nn">topo.plotting.plotgroup</span> <span class="kn">import</span> <span class="n">UnitMeasurementCommand</span><span class="p">,</span><span class="n">ProjectionSheetMeasurementCommand</span>
 <span class="kn">from</span> <span class="nn">topo.analysis.featureresponses</span> <span class="kn">import</span> <span class="n">Feature</span><span class="p">,</span> <span class="n">PatternPresenter</span><span class="p">,</span> <span class="n">MeasureResponseCommand</span>
 <span class="kn">from</span> <span class="nn">topo.analysis.featureresponses</span> <span class="kn">import</span> <span class="n">SinusoidalMeasureResponseCommand</span><span class="p">,</span> <span class="n">PositionMeasurementCommand</span><span class="p">,</span> <span class="n">SingleInputResponseCommand</span>
+<span class="kn">from</span> <span class="nn">topo.analysis.featureresponses</span> <span class="kn">import</span> <span class="n">update_activity</span><span class="p">,</span> <span class="n">update_sheet_activity</span><span class="p">,</span> <span class="n">measure_response</span>
 <span class="kn">from</span> <span class="nn">topo.base.patterngenerator</span> <span class="kn">import</span> <span class="n">PatternGenerator</span>
 <span class="kn">from</span> <span class="nn">topo.command</span> <span class="kn">import</span> <span class="n">pattern_present</span>
 
@@ -267,23 +268,6 @@
 
     <span class="n">res</span> <span class="o">=</span> <span class="n">DSF_WeightedAverage</span><span class="p">()(</span><span class="n">d</span><span class="p">)</span> <span class="k">if</span> <span class="n">weighted_average</span> <span class="k">else</span> <span class="n">DSF_MaxValue</span><span class="p">()(</span><span class="n">d</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">res</span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">][</span><span class="s">&#39;preference&#39;</span><span class="p">]</span>
-
-
-</div>
-<div class="viewcode-block" id="update_activity"><a class="viewcode-back" href="../../../Reference_Manual/topo.command.analysis-module.html#topo.command.analysis.update_activity">[docs]</a><span class="k">def</span> <span class="nf">update_activity</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Make a map of neural activity available for each sheet, for use in template-based plots.</span>
-
-<span class="sd">    This command simply asks each sheet for a copy of its activity</span>
-<span class="sd">    matrix, and then makes it available for plotting.  Of course, for</span>
-<span class="sd">    some sheets providing this information may be non-trivial, e.g. if</span>
-<span class="sd">    they need to average over recent spiking activity.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="n">activity_copy</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="p">)</span>
-        <span class="n">new_view</span> <span class="o">=</span> <span class="n">SheetView</span><span class="p">((</span><span class="n">activity_copy</span><span class="p">,</span><span class="n">sheet</span><span class="o">.</span><span class="n">bounds</span><span class="p">),</span>
-                              <span class="n">sheet</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span><span class="p">,</span><span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span><span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span><span class="p">)</span>
-        <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="p">[</span><span class="s">&#39;Activity&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">new_view</span>
 
 </div>
 <span class="n">pg</span> <span class="o">=</span> <span class="n">create_plotgroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Activity&#39;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="s">&#39;Basic&#39;</span><span class="p">,</span>
@@ -1407,7 +1391,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

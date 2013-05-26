@@ -395,7 +395,7 @@
 
 
     <span class="k">def</span> <span class="nf">_evaluate_filters_for_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
-        <span class="n">Zs</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="mi">2j</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">frequencies</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
+        <span class="n">Zs</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="n">j</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">frequencies</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
         <span class="n">Z_squareds</span> <span class="o">=</span> <span class="n">Zs</span> <span class="o">*</span> <span class="n">Zs</span>
 
         <span class="n">zeros</span> <span class="o">=</span> <span class="n">ones</span><span class="p">((</span><span class="n">shape</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shape</span><span class="p">(</span><span class="n">filters</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">complex64</span><span class="p">)</span>
@@ -655,7 +655,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

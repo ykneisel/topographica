@@ -390,9 +390,9 @@
         <span class="c"># Install warning and message handling</span>
         <span class="kn">from</span> <span class="nn">param.parameterized</span> <span class="kn">import</span> <span class="n">Parameterized</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__orig_P_warning</span> <span class="o">=</span> <span class="n">Parameterized</span><span class="o">.</span><span class="n">warning</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__orig_P_message</span> <span class="o">=</span> <span class="n">Parameterized</span><span class="o">.</span><span class="n">message</span>
+        <span class="c">#self.__orig_P_message = Parameterized.message</span>
         <span class="nb">type</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">Parameterized</span><span class="p">,</span><span class="s">&#39;warning&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gui_warning</span><span class="p">)</span>
-        <span class="nb">type</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">Parameterized</span><span class="p">,</span><span class="s">&#39;message&#39;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">gui_message</span><span class="p">)</span>
+        <span class="c">#type.__setattr__(Parameterized,&#39;message&#39;,self.gui_message)</span>
 
     <span class="k">def</span> <span class="nf">gui_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">stat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_status_bar</span><span class="p">()</span>
@@ -704,7 +704,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">messageBar</span><span class="o">.</span><span class="n">response</span><span class="p">(</span><span class="s">&#39;Snapshot saved to &#39;</span> <span class="o">+</span> <span class="n">snapshot_name</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="TopoConsole.auto_refresh"><a class="viewcode-back" href="../../../Reference_Manual/topo.tkgui.topoconsole-module.html#topo.tkgui.topoconsole.TopoConsole.auto_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">auto_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopoConsole.auto_refresh"><a class="viewcode-back" href="../../../Reference_Manual/topo.tkgui.topoconsole-module.html#topo.tkgui.topoconsole.TopoConsole.auto_refresh">[docs]</a>    <span class="k">def</span> <span class="nf">auto_refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh all windows in auto_refresh_panels.</span>
 
@@ -713,7 +713,7 @@
 <span class="sd">        autorefresh() is called.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">win</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_refresh_panels</span><span class="p">:</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">update</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_step_button_state</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
@@ -949,7 +949,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

@@ -70,9 +70,7 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
 <span class="kn">from</span> <span class="nn">colorsys</span> <span class="kn">import</span> <span class="n">hsv_to_rgb</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">zeros</span><span class="p">,</span> <span class="n">empty</span><span class="p">,</span> <span class="n">object_</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">vectorize</span><span class="p">,</span> <span class="n">fromfunction</span>
-<span class="kn">from</span> <span class="nn">numpy.oldnumeric</span> <span class="kn">import</span> <span class="n">Float</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">param</span>
 <span class="kn">from</span> <span class="nn">param.parameterized</span> <span class="kn">import</span> <span class="n">ParameterizedFunction</span><span class="p">,</span> <span class="n">ParamOverrides</span>
@@ -84,13 +82,14 @@
 <span class="kn">from</span> <span class="nn">topo.base.functionfamily</span> <span class="kn">import</span> <span class="n">PatternDrivenAnalysis</span>
 <span class="kn">from</span> <span class="nn">topo.base.sheet</span> <span class="kn">import</span> <span class="n">Sheet</span><span class="p">,</span> <span class="n">activity_type</span>
 <span class="kn">from</span> <span class="nn">topo.base.sheetview</span> <span class="kn">import</span> <span class="n">SheetView</span>
-<span class="kn">from</span> <span class="nn">topo.command</span> <span class="kn">import</span> <span class="n">pattern_present</span><span class="p">,</span><span class="n">restore_input_generators</span><span class="p">,</span> <span class="n">save_input_generators</span>
+<span class="kn">from</span> <span class="nn">topo.command</span> <span class="kn">import</span> <span class="n">restore_input_generators</span><span class="p">,</span> <span class="n">save_input_generators</span>
 <span class="kn">from</span> <span class="nn">topo.misc.distribution</span> <span class="kn">import</span> <span class="n">Distribution</span><span class="p">,</span> <span class="n">DistributionStatisticFn</span><span class="p">,</span> <span class="n">DSF_MaxValue</span><span class="p">,</span> <span class="n">DSF_WeightedAverage</span>
 <span class="kn">from</span> <span class="nn">topo.misc.util</span> <span class="kn">import</span> <span class="n">cross_product</span><span class="p">,</span> <span class="n">frange</span>
 <span class="kn">from</span> <span class="nn">topo</span> <span class="kn">import</span> <span class="n">pattern</span>
 <span class="kn">from</span> <span class="nn">topo.pattern</span> <span class="kn">import</span> <span class="n">SineGrating</span><span class="p">,</span> <span class="n">Gaussian</span><span class="p">,</span> <span class="n">RawRectangle</span><span class="p">,</span> <span class="n">Disk</span>
 <span class="kn">from</span> <span class="nn">topo.plotting.plotgroup</span> <span class="kn">import</span> <span class="n">plotgroups</span>
 <span class="kn">from</span> <span class="nn">topo.sheet</span> <span class="kn">import</span> <span class="n">GeneratorSheet</span>
+
 
 
 <span class="c"># CB: having a class called DistributionMatrix with an attribute</span>
@@ -112,25 +111,26 @@
 <span class="sd">    (which can be used as a preference map) and/or a selectivity</span>
 <span class="sd">    map (which measures the peakedness of each distribution).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">matrix_shape</span><span class="p">,</span><span class="n">axis_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">),</span> <span class="n">cyclic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">keep_peak</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">matrix_shape</span><span class="p">,</span><span class="n">axis_range</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">),</span><span class="n">cyclic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">keep_peak</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize the internal data structure: a matrix of Distribution objects.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis_range</span><span class="o">=</span><span class="n">axis_range</span>
-        <span class="n">new_distribution</span> <span class="o">=</span> <span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Distribution</span><span class="p">(</span><span class="n">axis_range</span><span class="p">,</span><span class="n">cyclic</span><span class="p">,</span><span class="n">keep_peak</span><span class="p">),</span>
+        <span class="n">new_distribution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Distribution</span><span class="p">(</span><span class="n">axis_range</span><span class="p">,</span><span class="n">cyclic</span><span class="p">,</span><span class="n">keep_peak</span><span class="p">),</span>
                                      <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Return a Distribution instance for each element of x.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span> <span class="o">=</span> <span class="n">new_distribution</span><span class="p">(</span><span class="n">empty</span><span class="p">(</span><span class="n">matrix_shape</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span> <span class="o">=</span> <span class="n">new_distribution</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">matrix_shape</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="DistributionMatrix.update"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.DistributionMatrix.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_values</span><span class="p">,</span> <span class="nb">bin</span><span class="p">):</span>
+<div class="viewcode-block" id="DistributionMatrix.update"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.DistributionMatrix.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_values</span><span class="p">,</span><span class="nb">bin</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add a new matrix of histogram values for a given bin value.&quot;&quot;&quot;</span>
         <span class="c">### JABHACKALERT!  The Distribution class should override +=,</span>
         <span class="c">### rather than + as used here, because this operation</span>
         <span class="c">### actually modifies the distribution_matrix, but that has</span>
         <span class="c">### not yet been done.  Alternatively, it could use a different</span>
         <span class="c">### function name altogether (e.g. update(x,y)).</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span> <span class="o">+</span> <span class="n">fromfunction</span><span class="p">(</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">:</span> <span class="p">{</span><span class="nb">bin</span><span class="p">:</span><span class="n">new_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]}),</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfunction</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">:</span> <span class="p">{</span><span class="nb">bin</span><span class="p">:</span><span class="n">new_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]}),</span>
                                                 <span class="n">new_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="DistributionMatrix.apply_DSF"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.DistributionMatrix.apply_DSF">[docs]</a>    <span class="k">def</span> <span class="nf">apply_DSF</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">dsf</span> <span class="p">):</span>
+<div class="viewcode-block" id="DistributionMatrix.apply_DSF"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.DistributionMatrix.apply_DSF">[docs]</a>    <span class="k">def</span> <span class="nf">apply_DSF</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">dsf</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply the given dsf DistributionStatisticFn on each element of the distribution_matrix</span>
 
@@ -138,23 +138,23 @@
 <span class="sd">        DistributionStatisticFn, but with matrices as values, instead of scalars</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="n">shape</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="o">.</span><span class="n">shape</span>
-        <span class="n">result</span>  <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c"># this is an extra call to the dsf() DistributionStatisticFn, in order to retrieve</span>
         <span class="c"># the dictionaries structure, and allocate the necessary matrices</span>
-        <span class="n">r0</span>      <span class="o">=</span> <span class="n">dsf</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">maps</span> <span class="ow">in</span> <span class="n">r0</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="n">result</span><span class="p">[</span> <span class="n">k</span> <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">r0</span> <span class="o">=</span> <span class="n">dsf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">maps</span> <span class="ow">in</span> <span class="n">r0</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">maps</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="n">result</span><span class="p">[</span> <span class="n">k</span> <span class="p">][</span> <span class="n">m</span> <span class="p">]</span>    <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span> <span class="n">shape</span><span class="p">,</span> <span class="n">Float</span> <span class="p">)</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="n">shape</span><span class="p">[</span> <span class="mi">0</span> <span class="p">]</span> <span class="p">):</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="n">shape</span><span class="p">[</span> <span class="mi">1</span> <span class="p">]</span> <span class="p">):</span>
-                <span class="n">response</span>        <span class="o">=</span> <span class="n">dsf</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="p">]</span> <span class="p">)</span>
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">item_value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                        <span class="n">result</span><span class="p">[</span> <span class="n">k</span> <span class="p">][</span> <span class="n">item</span> <span class="p">][</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="p">]</span>  <span class="o">=</span> <span class="n">item_value</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">dsf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">for</span> <span class="n">item</span><span class="p">,</span><span class="n">item_value</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">item</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">item_value</span>
 
         <span class="k">return</span> <span class="n">result</span>
 
@@ -171,17 +171,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">features</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="p">()</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="p">),)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">full_matrix</span> <span class="o">=</span> <span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span><span class="n">object_</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="o">+</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="p">),)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">full_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">object_</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="FullMatrix.update"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FullMatrix.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_values</span><span class="p">,</span> <span class="n">feature_value_permutation</span><span class="p">):</span>
+<div class="viewcode-block" id="FullMatrix.update"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FullMatrix.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">new_values</span><span class="p">,</span><span class="n">feature_value_permutation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add a new matrix of histogram values for a given bin value.&quot;&quot;&quot;</span>
         <span class="n">index</span> <span class="o">=</span> <span class="p">()</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">ff</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">feature_value_permutation</span><span class="p">:</span>
                 <span class="k">if</span><span class="p">(</span><span class="n">ff</span> <span class="o">==</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
-                    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value</span><span class="p">),)</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span><span class="o">+</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">value</span><span class="p">),)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">full_matrix</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_values</span>
 
 
@@ -232,11 +232,13 @@
 
     <span class="n">_fullmatrix</span> <span class="o">=</span> <span class="p">{}</span>
 
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FeatureResponses</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize_featureresponses</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pre_analysis_session_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">save_input_generators</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">post_analysis_session_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">restore_input_generators</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="FeatureResponses.initialize_featureresponses"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FeatureResponses.initialize_featureresponses">[docs]</a>    <span class="k">def</span> <span class="nf">initialize_featureresponses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Create an empty DistributionMatrix for each feature and each sheet.&quot;&quot;&quot;</span>
@@ -245,7 +247,7 @@
         <span class="n">FeatureResponses</span><span class="o">.</span><span class="n">_fullmatrix</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets_to_measure</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">=</span><span class="n">zeros</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
                 <span class="c"># CEBERRORALERT: line below is missing at least</span>
                 <span class="c"># &quot;keep_peak=f.keep_peak&quot;. Couldn&#39;t these things be</span>
@@ -298,6 +300,7 @@
 
         <span class="c"># Run hooks after the analysis session</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_analysis_session_hooks</span><span class="p">:</span> <span class="n">f</span><span class="p">()</span>
+
 </div>
 <div class="viewcode-block" id="FeatureResponses.present_permutation"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FeatureResponses.present_permutation">[docs]</a>    <span class="k">def</span> <span class="nf">present_permutation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">permutation</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Present a pattern with the specified set of feature values.&quot;&quot;&quot;</span>
@@ -305,7 +308,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">*=</span><span class="mi">0</span>
 
         <span class="c"># Calculate complete set of settings</span>
-        <span class="n">permuted_settings</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">permutation</span><span class="p">)</span>
+        <span class="n">permuted_settings</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span><span class="n">permutation</span><span class="p">)</span>
         <span class="n">complete_settings</span> <span class="o">=</span> <span class="n">permuted_settings</span> <span class="o">+</span> \
             <span class="p">[(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">f</span><span class="o">.</span><span class="n">compute_fn</span><span class="p">(</span><span class="n">permuted_settings</span><span class="p">))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features_to_compute</span><span class="p">]</span>
 
@@ -332,12 +335,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">complete_settings</span><span class="p">)</span>
+
 </div>
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">current_values</span><span class="p">):</span>
         <span class="c"># Update each DistributionMatrix with (activity,bin)</span>
         <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets_to_measure</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">feature</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="n">current_values</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">],</span><span class="n">value</span><span class="p">)</span>
             <span class="n">FeatureResponses</span><span class="o">.</span><span class="n">_fullmatrix</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_activities</span><span class="p">[</span><span class="n">sheet</span><span class="p">],</span><span class="n">current_values</span><span class="p">)</span>
 
 
@@ -360,11 +364,11 @@
         <span class="c"># surely there&#39;s a way to get an array of 0s for each element without</span>
         <span class="c"># looping? (probably had same question for distributionmatrix).</span>
         <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets_to_measure</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
             <span class="n">rows</span><span class="p">,</span><span class="n">cols</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="o">.</span><span class="n">shape</span>
             <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c"># need to specify dtype?</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c"># need to specify dtype?</span>
 
 
     <span class="k">def</span> <span class="nf">collect_feature_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="n">display</span><span class="p">,</span><span class="n">feature_values</span><span class="p">):</span>
@@ -384,8 +388,6 @@
                     <span class="n">input_sheet_views</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">=</span><span class="n">view</span>
 
 
-
-
 <div class="viewcode-block" id="ReverseCorrelation.measure_responses"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.ReverseCorrelation.measure_responses">[docs]</a>    <span class="k">def</span> <span class="nf">measure_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">display</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Present the given input patterns and collate the responses.&quot;&quot;&quot;</span>
 
@@ -402,7 +404,7 @@
         <span class="sd">&quot;&quot;&quot;Present a pattern with the specified set of feature values.&quot;&quot;&quot;</span>
 
         <span class="c"># Calculate complete set of settings</span>
-        <span class="n">permuted_settings</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">permutation</span><span class="p">)</span>
+        <span class="n">permuted_settings</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span><span class="n">permutation</span><span class="p">)</span>
         <span class="n">complete_settings</span> <span class="o">=</span> <span class="n">permuted_settings</span> <span class="o">+</span> \
             <span class="p">[(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">f</span><span class="o">.</span><span class="n">compute_fn</span><span class="p">(</span><span class="n">permuted_settings</span><span class="p">))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">features_to_compute</span><span class="p">]</span>
 
@@ -424,6 +426,7 @@
 
         <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">state_pop</span><span class="p">()</span>
 
+
     <span class="c"># Ignores current_values; they simply provide distinct patterns on the retina</span></div>
     <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">current_values</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets_to_measure</span><span class="p">():</span>
@@ -432,10 +435,11 @@
                 <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">ii</span><span class="p">,</span><span class="n">jj</span><span class="p">]</span><span class="o">+=</span><span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="p">[</span><span class="n">ii</span><span class="p">,</span><span class="n">jj</span><span class="p">]</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">input_sheet</span><span class="o">.</span><span class="n">activity</span>
 
+
 </div>
 <div class="viewcode-block" id="FeatureMaps"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FeatureMaps">[docs]</a><span class="k">class</span> <span class="nc">FeatureMaps</span><span class="p">(</span><span class="n">FeatureResponses</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Measures and collects the responses to a set of features for calculating feature maps.</span>
+<span class="sd">    Measure and collect the responses to a set of features, for calculating feature maps.</span>
 
 <span class="sd">    For each feature and each sheet, the results are stored as a</span>
 <span class="sd">    preference matrix and selectivity matrix in the sheet&#39;s</span>
@@ -443,15 +447,19 @@
 <span class="sd">    or selectivity maps.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span> <span class="n">DistributionStatisticFn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span>
-            <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot; Function that will be used to analyze the distributions of unit responses.</span>
-<span class="s">            Note that this default is orverriden by specific functions for features, if</span>
-<span class="s">            specified in the Feature objects&quot;&quot;&quot;</span> <span class="p">)</span>
+    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">DistributionStatisticFn</span><span class="p">,</span>
+                                        <span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Function for computing a scalar-valued preference,</span>
+<span class="s">        selectivity, etc. from the distribution of responses.  Note</span>
+<span class="s">        that this default is overridden by specific functions for</span>
+<span class="s">        individual features, if specified in the Feature objects.&quot;&quot;&quot;</span><span class="p">)</span>
 
 
-    <span class="n">selectivity_multiplier</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">17.0</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">            Scaling of the feature selectivity values applied in all feature dimensions.</span>
-<span class="s">            The multiplier sets the output scaling.&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">selectivity_multiplier</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">17.0</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Scaling of the feature selectivity values, applied in all</span>
+<span class="s">        feature dimensions.  The multiplier sets the output</span>
+<span class="s">        scaling.  The precise value is arbitrary, and set to match</span>
+<span class="s">        historical usage.&quot;&quot;&quot;</span><span class="p">)</span>
 
 
     <span class="c"># CBENHANCEMENT: could allow full control over the generated names</span>
@@ -459,11 +467,13 @@
     <span class="c"># ${prefix}${feature}${type} (where type is Preference or</span>
     <span class="c"># Selectivity)</span>
     <span class="n">sheet_views_prefix</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">            Prefix to add to the name under which results are stored in sheet_views.&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s">        Prefix to add to the name under which results are stored in sheet_views.&quot;&quot;&quot;</span><span class="p">)</span>
+
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FeatureMaps</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">features</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="o">=</span><span class="n">features</span>
+
 
 <div class="viewcode-block" id="FeatureMaps.collect_feature_responses"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FeatureMaps.collect_feature_responses">[docs]</a>    <span class="k">def</span> <span class="nf">collect_feature_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="n">display</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -477,10 +487,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_responses</span><span class="p">(</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="n">display</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheets_to_measure</span><span class="p">():</span>
-            <span class="n">bounding_box</span>    <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">bounds</span>
-            <span class="n">sn</span>              <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">name</span>
-            <span class="n">sp</span>              <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span>
-            <span class="n">sr</span>              <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span>
+            <span class="n">bounding_box</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="n">sn</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">sp</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span>
+            <span class="n">sr</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span>
 
             <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="c">### JCHACKALERT! This is temporary to avoid the positionpref plot to shrink</span>
@@ -490,29 +500,30 @@
             <span class="c">### I guess it is always cyclic value that we will color with hue in an hsv plot</span>
             <span class="c">### but still we should catch the error.</span>
             <span class="c">### Also, what happens in case of negative values?</span>
-                <span class="n">fp</span>                  <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span> <span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">feature</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="p">)[</span> <span class="mi">0</span> <span class="p">]</span>
-                <span class="n">ar</span>                  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis_range</span>
-                <span class="n">cyclic</span>              <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">cyclic</span>
-                <span class="n">cyclic_range</span>        <span class="o">=</span> <span class="n">ar</span>    <span class="k">if</span> <span class="n">cyclic</span>   <span class="k">else</span> <span class="mf">1.0</span>
-                <span class="n">preference_fn</span>       <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">preference_fn</span> <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">preference_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">preference_fn</span>
+                <span class="n">fp</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="o">==</span><span class="n">feature</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">ar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis_range</span>
+                <span class="n">cyclic</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">cyclic</span>
+                <span class="n">cyclic_range</span> <span class="o">=</span> <span class="n">ar</span> <span class="k">if</span> <span class="n">cyclic</span> <span class="k">else</span> <span class="mf">1.0</span>
+                <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">preference_fn</span> <span class="k">if</span> <span class="n">fp</span><span class="o">.</span><span class="n">preference_fn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">preference_fn</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectivity_multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-                    <span class="n">preference_fn</span><span class="o">.</span><span class="n">selectivity_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">preference_fn</span><span class="o">.</span><span class="n">selectivity_scale</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectivity_multiplier</span><span class="p">)</span>
-                <span class="n">fr</span>                  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span>
-                <span class="n">response</span>            <span class="o">=</span> <span class="n">fr</span><span class="o">.</span><span class="n">apply_DSF</span><span class="p">(</span> <span class="n">preference_fn</span> <span class="p">)</span>
-                <span class="n">base_name</span>           <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_views_prefix</span> <span class="o">+</span> <span class="n">feature</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+                    <span class="n">preference_fn</span><span class="o">.</span><span class="n">selectivity_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">preference_fn</span><span class="o">.</span><span class="n">selectivity_scale</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">selectivity_multiplier</span><span class="p">)</span>
+                <span class="n">fr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="n">sheet</span><span class="p">][</span><span class="n">feature</span><span class="p">]</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">fr</span><span class="o">.</span><span class="n">apply_DSF</span><span class="p">(</span><span class="n">preference_fn</span><span class="p">)</span>
+                <span class="n">base_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_views_prefix</span> <span class="o">+</span> <span class="n">feature</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
 
-                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">maps</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="n">t</span>           <span class="o">=</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-                    <span class="k">for</span> <span class="n">map_name</span><span class="p">,</span> <span class="n">map_view</span> <span class="ow">in</span> <span class="n">maps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                        <span class="n">name</span>                        <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">map_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">maps</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">map_name</span><span class="p">,</span><span class="n">map_view</span> <span class="ow">in</span> <span class="n">maps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">base_name</span> <span class="o">+</span> <span class="n">k</span> <span class="o">+</span> <span class="n">map_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
                         <span class="c"># JABALERT: Is this safe and general enough?</span>
                         <span class="k">if</span> <span class="n">map_name</span> <span class="o">==</span> <span class="s">&#39;selectivity&#39;</span><span class="p">:</span>
-                            <span class="n">cyclic</span>          <span class="o">=</span> <span class="bp">False</span>
-                            <span class="n">cyclic_range</span>    <span class="o">=</span> <span class="bp">None</span>
-                        <span class="n">view</span>                        <span class="o">=</span> <span class="n">SheetView</span><span class="p">(</span> <span class="p">(</span><span class="n">map_view</span><span class="p">,</span> <span class="n">bounding_box</span><span class="p">),</span> <span class="n">sn</span><span class="p">,</span> <span class="n">sp</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">sr</span> <span class="p">)</span>
-                        <span class="n">view</span><span class="o">.</span><span class="n">cyclic</span>                 <span class="o">=</span> <span class="n">cyclic</span>
-                        <span class="n">view</span><span class="o">.</span><span class="n">cyclic_range</span>           <span class="o">=</span> <span class="n">cyclic_range</span>
-                        <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="p">[</span> <span class="n">name</span> <span class="p">]</span>   <span class="o">=</span> <span class="n">view</span>
+                            <span class="n">cyclic</span> <span class="o">=</span> <span class="bp">False</span>
+                            <span class="n">cyclic_range</span> <span class="o">=</span> <span class="bp">None</span>
+                        <span class="n">view</span> <span class="o">=</span> <span class="n">SheetView</span><span class="p">((</span><span class="n">map_view</span><span class="p">,</span><span class="n">bounding_box</span><span class="p">),</span><span class="n">sn</span><span class="p">,</span><span class="n">sp</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">sr</span><span class="p">)</span>
+                        <span class="n">view</span><span class="o">.</span><span class="n">cyclic</span> <span class="o">=</span> <span class="n">cyclic</span>
+                        <span class="n">view</span><span class="o">.</span><span class="n">cyclic_range</span> <span class="o">=</span> <span class="n">cyclic_range</span>
+                        <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">view</span>
+
 
 </div></div>
 <div class="viewcode-block" id="FeatureCurves"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.FeatureCurves">[docs]</a><span class="k">class</span> <span class="nc">FeatureCurves</span><span class="p">(</span><span class="n">FeatureResponses</span><span class="p">):</span>
@@ -536,20 +547,24 @@
 <span class="sd">    features.  The results can be accessed in the curve_dict,</span>
 <span class="sd">    indexed by the curve_label and feature value.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">post_collect_responses_hook</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">HookList</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span><span class="n">instantiate</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        List of callable objects to be run at the end of collect_feature_responses function.</span>
 <span class="s">        The functions should accept three parameters: FullMatrix, curve label, sheet&quot;&quot;&quot;</span><span class="p">)</span>
 
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">sheet</span><span class="p">,</span><span class="n">x_axis</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureCurves</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FeatureCurves</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">=</span><span class="n">sheet</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="o">=</span><span class="n">x_axis</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span> <span class="s">&quot;curve_dict&quot;</span><span class="p">)</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sheet</span><span class="p">,</span><span class="s">&quot;curve_dict&quot;</span><span class="p">)</span><span class="o">==</span><span class="bp">False</span><span class="p">:</span>
             <span class="n">sheet</span><span class="o">.</span><span class="n">curve_dict</span><span class="o">=</span><span class="p">{}</span>
         <span class="n">sheet</span><span class="o">.</span><span class="n">curve_dict</span><span class="p">[</span><span class="n">x_axis</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
 
+
     <span class="k">def</span> <span class="nf">sheets_to_measure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">CFSheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+
 
     <span class="k">def</span> <span class="nf">collect_feature_responses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="n">curve_label</span><span class="p">,</span><span class="n">display</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize_featureresponses</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
@@ -557,14 +572,18 @@
         <span class="n">bounding_box</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">bounds</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_responses</span><span class="p">(</span><span class="n">pattern_presenter</span><span class="p">,</span><span class="n">param_dict</span><span class="p">,</span><span class="n">features</span><span class="p">,</span><span class="n">display</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">curve_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="p">][</span><span class="n">curve_label</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="p">]</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
-            <span class="n">y_axis_values</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">activity_type</span><span class="p">)</span>
+            <span class="n">y_axis_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">activity_type</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
                     <span class="n">y_axis_values</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_featureresponses</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="p">]</span><span class="o">.</span><span class="n">distribution_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="n">Response</span> <span class="o">=</span> <span class="n">SheetView</span><span class="p">((</span><span class="n">y_axis_values</span><span class="p">,</span><span class="n">bounding_box</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">name</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span><span class="p">,</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span><span class="p">)</span>
+            <span class="n">Response</span> <span class="o">=</span> <span class="n">SheetView</span><span class="p">((</span><span class="n">y_axis_values</span><span class="p">,</span><span class="n">bounding_box</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">name</span> <span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span><span class="p">,</span><span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="o">.</span><span class="n">curve_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x_axis</span><span class="p">][</span><span class="n">curve_label</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">key</span><span class="p">:</span><span class="n">Response</span><span class="p">})</span>
+
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_collect_responses_hook</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fullmatrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="p">],</span><span class="n">curve_label</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet</span><span class="p">)</span>
+
+
 
 <span class="c">###############################################################################</span>
 <span class="c">###############################################################################</span>
@@ -572,41 +591,40 @@
 <span class="c"># Define user-level commands and helper classes for calling the above</span>
 
 </div>
-<div class="viewcode-block" id="Feature"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.Feature">[docs]</a><span class="k">class</span> <span class="nc">Feature</span><span class="p">(</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span> <span class="p">):</span>
+<div class="viewcode-block" id="Feature"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.Feature">[docs]</a><span class="k">class</span> <span class="nc">Feature</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Specifies several parameters required for generating a map of one input feature</span>
-
+<span class="sd">    Specifies several parameters required for generating a map of one input feature.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">name</span>            <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;Name of the feature to test&quot;</span> <span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;Name of the feature to test&quot;</span><span class="p">)</span>
 
-    <span class="n">cyclic</span>          <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">            Whether the range of this feature is cyclic (wraps around at the high end)&quot;&quot;&quot;</span> <span class="p">)</span>
+    <span class="n">cyclic</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">            Whether the range of this feature is cyclic (wraps around at the high end)&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">compute_fn</span>      <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Callable</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">compute_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Callable</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">            If non-None, a function that when given a list of other parameter values,</span>
-<span class="s">            computes and returns the value for this feature&quot;&quot;&quot;</span> <span class="p">)</span>
+<span class="s">            computes and returns the value for this feature&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">preference_fn</span>   <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span> <span class="n">DistributionStatisticFn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span>
+    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">DistributionStatisticFn</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span>
             <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Function that will be used to analyze the distributions of unit response</span>
 <span class="s">            to this feature&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="nb">range</span>           <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">            lower and upper values for a feature, used to build a list of values,</span>
-<span class="s">            together with the step parameter&quot;&quot;&quot;</span> <span class="p">)</span>
+    <span class="nb">range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">            lower and upper values for a feature,used to build a list of values,</span>
+<span class="s">            together with the step parameter&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">step</span>            <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">            increment used to build a list of values for this feature, together with</span>
-<span class="s">            the range parameter&quot;&quot;&quot;</span> <span class="p">)</span>
+<span class="s">            the range parameter&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">offset</span>          <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;offset to add to the values for this feature&quot;</span> <span class="p">)</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;offset to add to the values for this feature&quot;</span><span class="p">)</span>
 
-    <span class="n">values</span>          <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">            explicit list of values for this feature, used in alternative to the range</span>
-<span class="s">            and step parameters&quot;&quot;&quot;</span> <span class="p">)</span>
+<span class="s">            and step parameters&quot;&quot;&quot;</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span> <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Users can provide either a range and a step size, or a list of values.</span>
 <span class="sd">        If a list of values is supplied, the range can be omitted unless the</span>
@@ -620,20 +638,21 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="nb">super</span><span class="p">(</span> <span class="n">Feature</span><span class="p">,</span> <span class="bp">self</span> <span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span> <span class="o">**</span><span class="n">params</span> <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Feature</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[</span><span class="n">v</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">==</span> <span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">(</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">)</span> <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">),</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">==</span> <span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> <span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;The range or values must be specified.&#39;</span><span class="p">)</span>
             <span class="n">low_bound</span><span class="p">,</span><span class="n">up_bound</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">range</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">frange</span><span class="p">(</span> <span class="n">low_bound</span><span class="p">,</span> <span class="n">up_bound</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">,</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cyclic</span> <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="n">frange</span><span class="p">(</span><span class="n">low_bound</span><span class="p">,</span><span class="n">up_bound</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">,</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cyclic</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> \
                     <span class="p">[(</span><span class="n">v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="n">up_bound</span> <span class="o">-</span> <span class="n">low_bound</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cyclic</span> <span class="k">else</span> <span class="p">(</span><span class="n">v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+
 
 </div>
 <div class="viewcode-block" id="PatternPresenter"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.PatternPresenter">[docs]</a><span class="k">class</span> <span class="nc">PatternPresenter</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span>
@@ -654,7 +673,7 @@
     <span class="c"># JABALERT: Needs documenting; apparently only for retinotopy?</span>
     <span class="n">divisions</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameter</span><span class="p">()</span>
 
-    <span class="n">apply_output_fns</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">apply_output_fns</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        When presenting a pattern, whether to apply each sheet&#39;s</span>
 <span class="s">        output function.  If False, for many networks the response</span>
 <span class="s">        will be linear, which requires fewer test patterns to measure</span>
@@ -675,12 +694,12 @@
 
     <span class="c"># CEBALERT: generator_sheets=[] is probably a surprising way of</span>
     <span class="c"># actually getting all the generator sheets.</span>
-    <span class="n">generator_sheets</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">generator_sheets</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        The set of GeneratorSheets onto which patterns will be drawn.</span>
 
 <span class="s">        By default (i.e. for an empty list), all GeneratorSheets in</span>
-<span class="s">        the simulation will be used.</span>
-<span class="s">        &quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s">        the simulation will be used.&quot;&quot;&quot;</span><span class="p">)</span>
+
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pattern_generator</span><span class="p">,</span><span class="o">**</span><span class="n">params</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -937,8 +956,9 @@
         <span class="k">for</span> <span class="n">sheet_name</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">all_input_sheet_names</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">input_sheet_names</span><span class="p">)):</span>
             <span class="n">inputs</span><span class="p">[</span><span class="n">sheet_name</span><span class="p">]</span><span class="o">=</span><span class="n">pattern</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="n">pattern_present</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">plastic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+        <span class="n">measure_response</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span><span class="n">plastic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                      <span class="n">apply_output_fns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">apply_output_fns</span><span class="p">)</span>
+
 
 </div>
 <div class="viewcode-block" id="Subplotting"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.Subplotting">[docs]</a><span class="k">class</span> <span class="nc">Subplotting</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span>
@@ -1082,7 +1102,7 @@
 <span class="c">#</span>
 <span class="c">#      from topo.command.analysis import Feature</span>
 <span class="c">#      from math import pi</span>
-<span class="c">#      pre_plot_hooks=[measure_or_pref.instance( \</span>
+<span class="c">#      pre_plot_hooks=[measure_or_pref.instance(\</span>
 <span class="c">#         frequency_feature=Feature(name=&quot;frequency&quot;,values=frange(1.0,6.0,0.2)), \</span>
 <span class="c">#         phase_feature=Feature(name=&quot;phase&quot;,range=(0.0,2*pi),step=2*pi/15,cyclic=True), \</span>
 <span class="c">#         orientation_feature=Feature(name=&quot;orientation&quot;,range=(0.0,pi),step=pi/4,cyclic=True)])</span>
@@ -1102,7 +1122,171 @@
 
 
 </div>
-<div class="viewcode-block" id="MeasureResponseCommand"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.MeasureResponseCommand">[docs]</a><span class="k">class</span> <span class="nc">MeasureResponseCommand</span><span class="p">(</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">PatternPresentingCommand</span><span class="p">(</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parameterized command for presenting input patterns&quot;&quot;&quot;</span>
+
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        If non-None, pattern_presenter.duration will be</span>
+<span class="s">        set to this value.  Provides a simple way to set</span>
+<span class="s">        this commonly changed option of PatternPresenter.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">sheet_views_prefix</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        Optional prefix to add to the name under which results are</span>
+<span class="s">        stored in sheet_views. Can be used e.g. to distinguish maps as</span>
+<span class="s">        originating from a particular GeneratorSheet.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
+
+
+
+<span class="k">def</span> <span class="nf">update_sheet_activity</span><span class="p">(</span><span class="n">sheet_name</span><span class="p">,</span><span class="n">sheet_views_prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">force</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the &#39;Activity&#39; SheetView for a given sheet by name.</span>
+
+<span class="sd">    If force is False and the existing Activity SheetView isn&#39;t stale,</span>
+<span class="sd">    this existing view is returned.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sheet</span> <span class="o">=</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)[</span><span class="n">sheet_name</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span> <span class="ow">and</span> <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Activity&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">):</span>
+        <span class="n">existing_view</span> <span class="o">=</span> <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="p">[</span><span class="s">&#39;Activity&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">existing_view</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">==</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">existing_view</span>
+
+    <span class="n">updated_view</span> <span class="o">=</span>  <span class="n">SheetView</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sheet</span><span class="o">.</span><span class="n">activity</span><span class="p">),</span><span class="n">sheet</span><span class="o">.</span><span class="n">bounds</span><span class="p">),</span>
+                              <span class="n">sheet</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">sheet</span><span class="o">.</span><span class="n">precedence</span><span class="p">,</span><span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span><span class="n">sheet</span><span class="o">.</span><span class="n">row_precedence</span><span class="p">)</span>
+    <span class="n">sheet</span><span class="o">.</span><span class="n">sheet_views</span><span class="p">[</span><span class="n">sheet_views_prefix</span><span class="o">+</span><span class="s">&#39;Activity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">updated_view</span>
+
+
+
+<span class="k">def</span> <span class="nf">update_activity</span><span class="p">(</span><span class="n">sheet_views_prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span><span class="n">force</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a map of neural activity available for each sheet, for use in template-based plots.</span>
+
+<span class="sd">    This command simply asks each sheet for a copy of its activity</span>
+<span class="sd">    matrix, and then makes it available for plotting.  Of course, for</span>
+<span class="sd">    some sheets providing this information may be non-trivial, e.g. if</span>
+<span class="sd">    they need to average over recent spiking activity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">sheet_name</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">update_sheet_activity</span><span class="p">(</span><span class="n">sheet_name</span><span class="p">,</span><span class="n">sheet_views_prefix</span><span class="p">,</span><span class="n">force</span><span class="p">)</span>
+
+
+
+<span class="k">class</span> <span class="nc">measure_response</span><span class="p">(</span><span class="n">PatternPresentingCommand</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This command presents the specified test patterns for the</span>
+<span class="sd">    specified duration and saves the resulting activity to the</span>
+<span class="sd">    appropriate SheetViews. Originally, this was the implementation of</span>
+<span class="sd">    the pattern_present command, which is still available in</span>
+<span class="sd">    topo.command and operates by wrapping a call to this class.</span>
+
+<span class="sd">    Given a set of input patterns, installs them into the specified</span>
+<span class="sd">    GeneratorSheets, runs the simulation for the specified length of</span>
+<span class="sd">    time, then restores the original patterns and the original</span>
+<span class="sd">    simulation time.  Thus this input is not considered part of the</span>
+<span class="sd">    regular simulation, and is usually for testing purposes.</span>
+
+<span class="sd">    As a special case, if &#39;inputs&#39; is just a single pattern, and not</span>
+<span class="sd">    a dictionary, it is presented to all GeneratorSheets.</span>
+
+<span class="sd">    If a simulation is not provided, the active simulation, if one</span>
+<span class="sd">    exists, is requested.</span>
+
+<span class="sd">    If this process is interrupted by the user, the temporary patterns</span>
+<span class="sd">    may still be installed on the retina.</span>
+
+<span class="sd">    In order to to see the sequence of values presented, you may use</span>
+<span class="sd">    the back arrow history mechanism in the GUI. Note that the GUI&#39;s</span>
+<span class="sd">    Activity window must be open and the display parameter set to true</span>
+<span class="sd">    (display=True).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{},</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        A dictionary of GeneratorSheetName:PatternGenerator pairs to be</span>
+<span class="s">        installed into the specified GeneratorSheets&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">plastic</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        If plastic is False, overwrites the existing values of</span>
+<span class="s">        Sheet.plastic to disable plasticity, then reenables plasticity.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">overwrite_previous</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        If overwrite_previous is true, the given inputs overwrite those</span>
+<span class="s">        previously defined.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">apply_output_fns</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">restore_state</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        If True, restore the state of both sheet activities and simulation events</span>
+<span class="s">        after the response has been measured.  Implies restore_events.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">restore_events</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">        If True, restore simulation events after the response has been measured,</span>
+<span class="s">        so that no simulation time will have elapsed.  Implied by</span>
+<span class="s">        restore_state=True.&quot;&quot;&quot;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">inputs</span><span class="o">=</span><span class="p">{},</span><span class="o">**</span><span class="n">params_to_override</span><span class="p">):</span>
+
+        <span class="n">p</span><span class="o">=</span><span class="n">ParamOverrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="nb">dict</span><span class="p">(</span><span class="n">params_to_override</span><span class="p">,</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">))</span>
+        <span class="c"># ensure EPs get started (if pattern_present is called before the simulation is run())</span>
+        <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">overwrite_previous</span><span class="p">:</span>
+            <span class="n">save_input_generators</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">plastic</span><span class="p">:</span>
+            <span class="c"># turn off plasticity everywhere</span>
+            <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                 <span class="n">sheet</span><span class="o">.</span><span class="n">override_plasticity_state</span><span class="p">(</span><span class="n">new_plasticity_state</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">apply_output_fns</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">each</span><span class="p">,</span><span class="s">&#39;measure_maps&#39;</span><span class="p">):</span>
+                   <span class="k">if</span> <span class="n">each</span><span class="o">.</span><span class="n">measure_maps</span><span class="p">:</span>
+                       <span class="n">each</span><span class="o">.</span><span class="n">apply_output_fns</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c"># Register the inputs on each input sheet</span>
+        <span class="n">generatorsheets</span> <span class="o">=</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">GeneratorSheet</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">generatorsheets</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">set_input_generator</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">inputs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">generatorsheets</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">each</span><span class="p">):</span>
+                    <span class="n">generatorsheets</span><span class="p">[</span><span class="n">each</span><span class="p">]</span><span class="o">.</span><span class="n">set_input_generator</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">each</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">()</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="s">&#39;</span><span class="si">%s</span><span class="s"> not a valid Sheet name for pattern_present.&#39;</span> <span class="o">%</span> <span class="n">each</span><span class="p">)</span>
+
+        <span class="k">if</span>   <span class="n">p</span><span class="o">.</span><span class="n">restore_state</span><span class="p">:</span>   <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">state_push</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">restore_events</span><span class="p">:</span>  <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">event_push</span><span class="p">()</span>
+
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">duration</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span> <span class="k">else</span> <span class="mf">1.0</span>
+        <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+
+        <span class="k">if</span>   <span class="n">p</span><span class="o">.</span><span class="n">restore_state</span><span class="p">:</span>   <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">state_pop</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">p</span><span class="o">.</span><span class="n">restore_events</span><span class="p">:</span>  <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">event_pop</span><span class="p">()</span>
+
+        <span class="c"># turn sheets&#39; plasticity and output_fn plasticity back on if we turned it off before</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">plastic</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">sheet</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">sheet</span><span class="o">.</span><span class="n">restore_plasticity_state</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">apply_output_fns</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">topo</span><span class="o">.</span><span class="n">sim</span><span class="o">.</span><span class="n">objects</span><span class="p">(</span><span class="n">Sheet</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">each</span><span class="o">.</span><span class="n">apply_output_fns</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">overwrite_previous</span><span class="p">:</span>
+            <span class="n">restore_input_generators</span><span class="p">()</span>
+
+        <span class="n">update_activity</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">sheet_views_prefix</span><span class="p">,</span><span class="n">force</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="MeasureResponseCommand"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.MeasureResponseCommand">[docs]</a><span class="k">class</span> <span class="nc">MeasureResponseCommand</span><span class="p">(</span><span class="n">PatternPresentingCommand</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parameterized command for presenting input patterns and measuring responses.&quot;&quot;&quot;</span>
 
     <span class="n">scale</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="n">softbounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">),</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
@@ -1114,7 +1298,7 @@
     <span class="n">display</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        Whether to update a GUI display (if any) during the map measurement.&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">weighted_average</span><span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">weighted_average</span><span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        Whether to compute results using a weighted average, or just</span>
 <span class="s">        discrete values.  A weighted average can give more precise</span>
 <span class="s">        results, without being limited to a set of discrete values,</span>
@@ -1134,28 +1318,18 @@
 
     <span class="n">subplot</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Name of map to register as a subplot, if any.&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">apply_output_fns</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
+    <span class="n">apply_output_fns</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        If non-None, pattern_presenter.apply_output_fns will be</span>
 <span class="s">        set to this value.  Provides a simple way to set</span>
 <span class="s">        this commonly changed option of PatternPresenter.&quot;&quot;&quot;</span><span class="p">)</span>
-
-    <span class="n">duration</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">        If non-None, pattern_presenter.duration will be</span>
-<span class="s">        set to this value.  Provides a simple way to set</span>
-<span class="s">        this commonly changed option of PatternPresenter.&quot;&quot;&quot;</span><span class="p">)</span>
-
-    <span class="n">sheet_views_prefix</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">        Optional prefix to add to the name under which results are</span>
-<span class="s">        stored in sheet_views. Can be used e.g. to distinguish maps as</span>
-<span class="s">        originating from a particular GeneratorSheet.&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">generator_sheets</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span><span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">        pattern_presenter.generator_sheets will be set to this value.</span>
 <span class="s">        The default value of [] results in all GeneratorSheets being</span>
 <span class="s">        used.&quot;&quot;&quot;</span><span class="p">)</span>
 
-    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span> <span class="n">DistributionStatisticFn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DSF_MaxValue</span><span class="p">(),</span>
-            <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Function that will be used to analyze the distributions of unit responses.&quot;&quot;&quot;</span> <span class="p">)</span>
+    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">DistributionStatisticFn</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="n">DSF_MaxValue</span><span class="p">(),</span>
+            <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Function that will be used to analyze the distributions of unit responses.&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
 
@@ -1210,8 +1384,8 @@
 
     <span class="n">scale</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 
-    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span> <span class="n">DistributionStatisticFn</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span>
-            <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Function that will be used to analyze the distributions of unit responses.&quot;&quot;&quot;</span> <span class="p">)</span>
+    <span class="n">preference_fn</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">DistributionStatisticFn</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="n">DSF_WeightedAverage</span><span class="p">(),</span>
+            <span class="n">doc</span><span class="o">=</span><span class="s">&quot;&quot;&quot;Function that will be used to analyze the distributions of unit responses.&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
 
@@ -1242,7 +1416,6 @@
     <span class="n">static_parameters</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;scale&quot;</span><span class="p">,</span><span class="s">&quot;offset&quot;</span><span class="p">,</span><span class="s">&quot;size&quot;</span><span class="p">])</span>
 
     <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
-
 
 
 </div>
@@ -1349,6 +1522,7 @@
 
         <span class="k">return</span> <span class="n">val</span>
 
+
 </div>
 <div class="viewcode-block" id="UnitCurveCommand"><a class="viewcode-back" href="../../../Reference_Manual/topo.analysis.featureresponses-module.html#topo.analysis.featureresponses.UnitCurveCommand">[docs]</a><span class="k">class</span> <span class="nc">UnitCurveCommand</span><span class="p">(</span><span class="n">FeatureCurveCommand</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -1366,6 +1540,7 @@
 <span class="s">        List of coordinates of units to measure.&quot;&quot;&quot;</span><span class="p">)</span>
 
     <span class="n">__abstract</span> <span class="o">=</span> <span class="bp">True</span>
+
 
 </div>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
@@ -1457,7 +1632,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>

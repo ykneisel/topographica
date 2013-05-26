@@ -6,8 +6,8 @@ topo.command
 
 Submodules
 ==========
-* `topo.command.analysis <topo.command.analysis-module.html>`_
 * `topo.command.pylabplot <topo.command.pylabplot-module.html>`_
+* `topo.command.analysis <topo.command.analysis-module.html>`_
 
 
 Module

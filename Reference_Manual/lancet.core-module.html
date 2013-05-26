@@ -324,40 +324,40 @@ by descending &#8216;time&#8217; value.</p>
             state updated via the update() method between iterations. In other
             words, if the arguments cannot be known ahead of time (eg. parameter
             search), dynamic must be set to True.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">order</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>An ordered list of annotated keys for lexical sorting. An annotated
-             key is the usual key name prefixed with either &#8216;+&#8217; (for ascending
-             sort) or &#8216;-&#8216; (for descending sort). By default, no sorting is applied.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">specs</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The static list of specifications (ie. dictionaries) to be
+          returned by the specifier. Float values are rounded to
+          fp_precision.</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">fp_precision</span></tt> (<em>allow_None=False, bounds=None, constant=True, default=4, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>The floating point precision to use for floating point values.  Unlike
          other basic Python types, floats need care with their representation as
          you only want to display up to the precision actually specified.</dd>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">operand</span></tt> (<em>allow_None=True, constant=True, default=None, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The source specifier which is to be lexically sorted.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">specs</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The static list of specifications (ie. dictionaries) to be
-          returned by the specifier. Float values are rounded to
-          fp_precision.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">order</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>An ordered list of annotated keys for lexical sorting. An annotated
+             key is the usual key name prefixed with either &#8216;+&#8217; (for ascending
+             sort) or &#8216;-&#8216; (for descending sort). By default, no sorting is applied.</dd>
 </dl>
 </dd></dl>
 
 <dl class="class">
 <dt id="lancet.core.LinearArgs">
-<em class="property">class </em><tt class="descclassname">lancet.core.</tt><tt class="descname">LinearArgs</tt><big>(</big><em>key</em>, <em>start_value</em>, <em>end_value</em>, <em>steps=2</em>, <em>mapfn=&lt;function identityfn at 0x4b61488&gt;</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lancet/core.html#LinearArgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lancet.core.LinearArgs" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">lancet.core.</tt><tt class="descname">LinearArgs</tt><big>(</big><em>key</em>, <em>start_value</em>, <em>end_value</em>, <em>steps=2</em>, <em>mapfn=&lt;function identityfn at 0x50557d0&gt;</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/lancet/core.html#LinearArgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lancet.core.LinearArgs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lancet.core.StaticArgs" title="lancet.core.StaticArgs"><tt class="xref py py-class docutils literal"><span class="pre">lancet.core.StaticArgs</span></tt></a></p>
 <p>LinearArgs generates an argument from a numerically interpolated range which
 is linear by default. An optional function can be specified to sample a
 numeric range with regular intervals.</p>
 <dl class="docutils">
-<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">end_value</span></tt> (<em>allow_None=True, bounds=None, constant=True, default=None, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
-<dd>The ending numeric value of the linear interpolation (inclusive).</dd>
-<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">mapfn</span></tt> (<em>constant=True, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The function to be mapped across the linear range. Identity  by default</dd>
 <dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">dynamic</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=True, default=False, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Flag to indicate whether the argument specifier needs to have its
             state updated via the update() method between iterations. In other
             words, if the arguments cannot be known ahead of time (eg. parameter
             search), dynamic must be set to True.</dd>
+<dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">mapfn</span></tt> (<em>constant=True, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The function to be mapped across the linear range. Identity  by default</dd>
+<dt><em>param Number</em> <tt class="docutils literal"><span class="pre">end_value</span></tt> (<em>allow_None=True, bounds=None, constant=True, default=None, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
+<dd>The ending numeric value of the linear interpolation (inclusive).</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">fp_precision</span></tt> (<em>allow_None=False, bounds=None, constant=True, default=4, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>The floating point precision to use for floating point values.  Unlike
          other basic Python types, floats need care with their representation as
@@ -390,13 +390,13 @@ numeric range with regular intervals.</p>
 <dl class="docutils">
 <dt><em>param List</em> <tt class="docutils literal"><span class="pre">list_values</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The list values that are to be returned by the specifier</dd>
-<dt><em>param String</em> <tt class="docutils literal"><span class="pre">list_key</span></tt> (<em>allow_None=False, constant=True, default=default, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>The key assigned to the elements of the given list.</dd>
 <dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">dynamic</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=True, default=False, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Flag to indicate whether the argument specifier needs to have its
             state updated via the update() method between iterations. In other
             words, if the arguments cannot be known ahead of time (eg. parameter
             search), dynamic must be set to True.</dd>
+<dt><em>param String</em> <tt class="docutils literal"><span class="pre">list_key</span></tt> (<em>allow_None=False, constant=True, default=default, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>The key assigned to the elements of the given list.</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">fp_precision</span></tt> (<em>allow_None=False, bounds=None, constant=True, default=4, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>The floating point precision to use for floating point values.  Unlike
          other basic Python types, floats need care with their representation as
@@ -422,14 +422,14 @@ the option of adding the task id to the loaded specifications.</p>
 <dd>The relative or absolute path to the log file. If a relative path
               is given, the absolute path is computed with param.normalize_path
               (os.getcwd() by default).</dd>
-<dt><em>param String</em> <tt class="docutils literal"><span class="pre">tid_key</span></tt> (<em>allow_None=True, constant=True, default=tid, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>If not None, the key given to the tid values included in the
-               loaded specifications. If None, the tid number is ignored.</dd>
 <dt><em>param Boolean</em> <tt class="docutils literal"><span class="pre">dynamic</span></tt> (<em>allow_None=False, bounds=(0, 1), constant=True, default=False, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Flag to indicate whether the argument specifier needs to have its
             state updated via the update() method between iterations. In other
             words, if the arguments cannot be known ahead of time (eg. parameter
             search), dynamic must be set to True.</dd>
+<dt><em>param String</em> <tt class="docutils literal"><span class="pre">tid_key</span></tt> (<em>allow_None=True, constant=True, default=tid, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>If not None, the key given to the tid values included in the
+               loaded specifications. If None, the tid number is ignored.</dd>
 <dt><em>param Integer</em> <tt class="docutils literal"><span class="pre">fp_precision</span></tt> (<em>allow_None=False, bounds=None, constant=True, default=4, inclusive_bounds=(True, True), instantiate=True, pickle_default_value=True, precedence=None, readonly=False, time_fn=None</em>)</dt>
 <dd>The floating point precision to use for floating point values.  Unlike
          other basic Python types, floats need care with their representation as
@@ -575,12 +575,12 @@ def add_one(value=None):</p>
 <dt><em>param ClassSelector</em> <tt class="docutils literal"><span class="pre">specifier</span></tt> (<em>allow_None=True, constant=True, default=None, instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The specifier from which the positional and keyword
                 arguments are to be derived.</dd>
-<dt><em>param List</em> <tt class="docutils literal"><span class="pre">accumulator</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
-<dd>Accumulates the return values of the callable.</dd>
 <dt><em>param String</em> <tt class="docutils literal"><span class="pre">log_path</span></tt> (<em>allow_None=True, constant=False, default=None, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Optional path to a log file for recording the list of arguments used.</dd>
 <dt><em>param List</em> <tt class="docutils literal"><span class="pre">args</span></tt> (<em>bounds=(0, None), constant=True, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>The list of positional arguments to generate.</dd>
+<dt><em>param List</em> <tt class="docutils literal"><span class="pre">accumulator</span></tt> (<em>bounds=(0, None), constant=False, default=[], instantiate=True, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
+<dd>Accumulates the return values of the callable.</dd>
 <dt><em>param Callable</em> <tt class="docutils literal"><span class="pre">update_fn</span></tt> (<em>constant=False, instantiate=False, pickle_default_value=True, precedence=None, readonly=False</em>)</dt>
 <dd>Hook to call to update dynamic specifiers as necessary.  This
                  callable takes two arguments, first the specifier that needs
@@ -672,7 +672,7 @@ def add_one(value=None):</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, IOAM.
-      Last updated on Apr 28, 2013.
+      Last updated on May 27, 2013.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
