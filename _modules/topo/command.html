@@ -182,8 +182,9 @@
 <span class="sd">    informed of the possibility of having various extra functions on</span>
 <span class="sd">    installation of a missing package.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__dict__</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">module_name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__module_name</span> <span class="o">=</span> <span class="n">module_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="s">&#39;_ImportErrorObject__module_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_name</span>
     <span class="k">def</span> <span class="nf">_raise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c">#param.Parameterized().warning(&quot;err:%s&quot;%self.module_name)</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="s">&quot;No module named </span><span class="si">%s</span><span class="s">. Install </span><span class="si">%s</span><span class="s"> to get this functionality.&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__module_name</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__module_name</span><span class="p">)</span>
@@ -195,6 +196,8 @@
     <span class="c"># error (rather than covering call, getitem, getattr, and maybe</span>
     <span class="c"># other things I&#39;ve forgotten about).</span>
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raise</span><span class="p">()</span>
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">i</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raise</span><span class="p">()</span>
