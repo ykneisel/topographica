@@ -9,200 +9,200 @@
 <g id="graph1" class="graph" transform="scale(1 1) rotate(0) translate(4 281)">
 <title>inheritance0f827376bc</title>
 <polygon fill="white" stroke="white" points="-4,5 -4,-281 2191,-281 2191,5 -4,5"/>
-<!-- topo.analysis.featureresponses.measure_response -->
-<g id="node1" class="node"><title>topo.analysis.featureresponses.measure_response</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1147,-163.5 885,-163.5 885,-142.5 1147,-142.5 1147,-163.5"/>
-<text text-anchor="middle" x="1016" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.measure_response</text>
-</g>
-<!-- topo.analysis.featureresponses.PatternPresentingCommand -->
-<g id="node2" class="node"><title>topo.analysis.featureresponses.PatternPresentingCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="825,-163.5 521,-163.5 521,-142.5 825,-142.5 825,-163.5"/>
-<text text-anchor="middle" x="673" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.PatternPresentingCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.measure_response -->
-<g id="edge2" class="edge"><title>topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.measure_response</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M825.942,-153C843.751,-153 861.83,-153 879.398,-153"/>
-<polygon fill="black" stroke="black" points="879.833,-154.75 884.833,-153 879.833,-151.25 879.833,-154.75"/>
-</g>
-<!-- topo.analysis.featureresponses.MeasureResponseCommand -->
-<g id="node5" class="node"><title>topo.analysis.featureresponses.MeasureResponseCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1169,-125.5 863,-125.5 863,-104.5 1169,-104.5 1169,-125.5"/>
-<text text-anchor="middle" x="1016" y="-112.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.MeasureResponseCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.MeasureResponseCommand -->
-<g id="edge18" class="edge"><title>topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.MeasureResponseCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M763.568,-142.966C811.924,-137.609 871.418,-131.018 920.5,-125.58"/>
-<polygon fill="black" stroke="black" points="920.743,-127.314 925.52,-125.024 920.357,-123.835 920.743,-127.314"/>
-</g>
-<!-- topo.analysis.featureresponses.SinusoidalMeasureResponseCommand -->
-<g id="node4" class="node"><title>topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1562,-163.5 1206,-163.5 1206,-142.5 1562,-142.5 1562,-163.5"/>
-<text text-anchor="middle" x="1384" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.FeatureCurveCommand -->
-<g id="node12" class="node"><title>topo.analysis.featureresponses.FeatureCurveCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1882,-163.5 1598,-163.5 1598,-142.5 1882,-142.5 1882,-163.5"/>
-<text text-anchor="middle" x="1740" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureCurveCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.SinusoidalMeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.FeatureCurveCommand -->
-<g id="edge36" class="edge"><title>topo.analysis.featureresponses.SinusoidalMeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.FeatureCurveCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M1562,-153C1572.21,-153 1582.43,-153 1592.51,-153"/>
-<polygon fill="black" stroke="black" points="1592.76,-154.75 1597.76,-153 1592.76,-151.25 1592.76,-154.75"/>
-</g>
-<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SinusoidalMeasureResponseCommand -->
-<g id="edge4" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M1113.17,-125.034C1165.15,-130.402 1229.14,-137.009 1281.86,-142.453"/>
-<polygon fill="black" stroke="black" points="1281.77,-144.203 1286.93,-142.976 1282.13,-140.722 1281.77,-144.203"/>
-</g>
-<!-- topo.analysis.featureresponses.PositionMeasurementCommand -->
-<g id="node18" class="node"><title>topo.analysis.featureresponses.PositionMeasurementCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1546,-125.5 1222,-125.5 1222,-104.5 1546,-104.5 1546,-125.5"/>
-<text text-anchor="middle" x="1384" y="-112.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.PositionMeasurementCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.PositionMeasurementCommand -->
-<g id="edge14" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.PositionMeasurementCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M1169.67,-115C1185.16,-115 1200.95,-115 1216.58,-115"/>
-<polygon fill="black" stroke="black" points="1216.87,-116.75 1221.87,-115 1216.87,-113.25 1216.87,-116.75"/>
-</g>
-<!-- topo.analysis.featureresponses.SingleInputResponseCommand -->
-<g id="node38" class="node"><title>topo.analysis.featureresponses.SingleInputResponseCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1543,-87.5 1225,-87.5 1225,-66.5 1543,-66.5 1543,-87.5"/>
-<text text-anchor="middle" x="1384" y="-74.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.SingleInputResponseCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SingleInputResponseCommand -->
-<g id="edge38" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SingleInputResponseCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M1113.17,-104.966C1165.15,-99.5982 1229.14,-92.9912 1281.86,-87.5472"/>
-<polygon fill="black" stroke="black" points="1282.13,-89.2785 1286.93,-87.024 1281.77,-85.797 1282.13,-89.2785"/>
-</g>
-<!-- topo.analysis.featureresponses.ReverseCorrelation -->
-<g id="node7" class="node"><title>topo.analysis.featureresponses.ReverseCorrelation</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1146,-277.5 886,-277.5 886,-256.5 1146,-256.5 1146,-277.5"/>
-<text text-anchor="middle" x="1016" y="-264.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.ReverseCorrelation</text>
+<!-- topo.analysis.featureresponses.FeatureCurves -->
+<g id="node1" class="node"><title>topo.analysis.featureresponses.FeatureCurves</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1135,-277.5 897,-277.5 897,-256.5 1135,-256.5 1135,-277.5"/>
+<text text-anchor="middle" x="1016" y="-264.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureCurves</text>
 </g>
 <!-- topo.analysis.featureresponses.FeatureResponses -->
-<g id="node8" class="node"><title>topo.analysis.featureresponses.FeatureResponses</title>
+<g id="node2" class="node"><title>topo.analysis.featureresponses.FeatureResponses</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="801,-220.5 545,-220.5 545,-199.5 801,-199.5 801,-220.5"/>
 <text text-anchor="middle" x="673" y="-207.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureResponses</text>
 </g>
-<!-- topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.ReverseCorrelation -->
-<g id="edge6" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.ReverseCorrelation</title>
+<!-- topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureCurves -->
+<g id="edge2" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureCurves</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M717.887,-220.021C756.072,-228.306 812.442,-239.973 862,-248 880.716,-251.032 900.782,-253.832 920.04,-256.3"/>
 <polygon fill="black" stroke="black" points="920.268,-258.093 925.448,-256.987 920.709,-254.621 920.268,-258.093"/>
 </g>
+<!-- topo.analysis.featureresponses.ReverseCorrelation -->
+<g id="node12" class="node"><title>topo.analysis.featureresponses.ReverseCorrelation</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1146,-239.5 886,-239.5 886,-218.5 1146,-218.5 1146,-239.5"/>
+<text text-anchor="middle" x="1016" y="-226.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.ReverseCorrelation</text>
+</g>
+<!-- topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.ReverseCorrelation -->
+<g id="edge10" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.ReverseCorrelation</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M801.696,-217.129C827.448,-218.555 854.575,-220.058 880.547,-221.497"/>
+<polygon fill="black" stroke="black" points="880.636,-223.254 885.726,-221.784 880.83,-219.76 880.636,-223.254"/>
+</g>
 <!-- topo.analysis.featureresponses.FeatureMaps -->
-<g id="node23" class="node"><title>topo.analysis.featureresponses.FeatureMaps</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1131,-239.5 901,-239.5 901,-218.5 1131,-218.5 1131,-239.5"/>
-<text text-anchor="middle" x="1016" y="-226.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureMaps</text>
+<g id="node31" class="node"><title>topo.analysis.featureresponses.FeatureMaps</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1131,-201.5 901,-201.5 901,-180.5 1131,-180.5 1131,-201.5"/>
+<text text-anchor="middle" x="1016" y="-188.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureMaps</text>
 </g>
 <!-- topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureMaps -->
-<g id="edge20" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureMaps</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M801.696,-217.129C832.335,-218.826 864.92,-220.631 895.191,-222.308"/>
-<polygon fill="black" stroke="black" points="895.331,-224.068 900.42,-222.598 895.525,-220.574 895.331,-224.068"/>
+<g id="edge28" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureMaps</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M801.696,-202.871C832.335,-201.174 864.92,-199.369 895.191,-197.692"/>
+<polygon fill="black" stroke="black" points="895.525,-199.426 900.42,-197.402 895.331,-195.932 895.525,-199.426"/>
 </g>
-<!-- topo.analysis.featureresponses.FeatureCurves -->
-<g id="node32" class="node"><title>topo.analysis.featureresponses.FeatureCurves</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="1135,-201.5 897,-201.5 897,-180.5 1135,-180.5 1135,-201.5"/>
-<text text-anchor="middle" x="1016" y="-188.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureCurves</text>
+<!-- topo.analysis.featureresponses.UnitCurveCommand -->
+<g id="node4" class="node"><title>topo.analysis.featureresponses.UnitCurveCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="2185,-163.5 1919,-163.5 1919,-142.5 2185,-142.5 2185,-163.5"/>
+<text text-anchor="middle" x="2052" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.UnitCurveCommand</text>
 </g>
-<!-- topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureCurves -->
-<g id="edge30" class="edge"><title>topo.analysis.featureresponses.FeatureResponses&#45;&gt;topo.analysis.featureresponses.FeatureCurves</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M801.696,-202.871C831.077,-201.244 862.248,-199.517 891.451,-197.899"/>
-<polygon fill="black" stroke="black" points="891.603,-199.644 896.499,-197.62 891.41,-196.149 891.603,-199.644"/>
+<!-- topo.analysis.featureresponses.FeatureCurveCommand -->
+<g id="node5" class="node"><title>topo.analysis.featureresponses.FeatureCurveCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1882,-163.5 1598,-163.5 1598,-142.5 1882,-142.5 1882,-163.5"/>
+<text text-anchor="middle" x="1740" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FeatureCurveCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.FeatureCurveCommand&#45;&gt;topo.analysis.featureresponses.UnitCurveCommand -->
+<g id="edge4" class="edge"><title>topo.analysis.featureresponses.FeatureCurveCommand&#45;&gt;topo.analysis.featureresponses.UnitCurveCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M1882.3,-153C1892.43,-153 1902.64,-153 1912.75,-153"/>
+<polygon fill="black" stroke="black" points="1913.03,-154.75 1918.03,-153 1913.03,-151.25 1913.03,-154.75"/>
 </g>
 <!-- param.parameterized.Parameterized -->
-<g id="node10" class="node"><title>param.parameterized.Parameterized</title>
+<g id="node7" class="node"><title>param.parameterized.Parameterized</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="194,-134.5 5.68434e-14,-134.5 0,-113.5 194,-113.5 194,-134.5"/>
 <text text-anchor="middle" x="97" y="-121.5" font-family="Vera" font-size="10.00">param.parameterized.Parameterized</text>
 </g>
-<!-- topo.analysis.featureresponses.DistributionMatrix -->
-<g id="node14" class="node"><title>topo.analysis.featureresponses.DistributionMatrix</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="484,-248.5 230,-248.5 230,-227.5 484,-227.5 484,-248.5"/>
-<text text-anchor="middle" x="357" y="-235.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.DistributionMatrix</text>
+<!-- topo.analysis.featureresponses.Feature -->
+<g id="node8" class="node"><title>topo.analysis.featureresponses.Feature</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="460,-248.5 254,-248.5 254,-227.5 460,-227.5 460,-248.5"/>
+<text text-anchor="middle" x="357" y="-235.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.Feature</text>
 </g>
-<!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.DistributionMatrix -->
-<g id="edge10" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.DistributionMatrix</title>
+<!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Feature -->
+<g id="edge6" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Feature</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M107.318,-134.077C128.386,-153.991 178.705,-198.251 230,-219 237.445,-222.012 245.31,-224.552 253.328,-226.694"/>
 <polygon fill="black" stroke="black" points="253.06,-228.431 258.338,-227.976 253.929,-225.041 253.06,-228.431"/>
 </g>
 <!-- topo.base.functionfamily.PatternDrivenAnalysis -->
-<g id="node16" class="node"><title>topo.base.functionfamily.PatternDrivenAnalysis</title>
+<g id="node10" class="node"><title>topo.base.functionfamily.PatternDrivenAnalysis</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="477,-210.5 237,-210.5 237,-189.5 477,-189.5 477,-210.5"/>
 <text text-anchor="middle" x="357" y="-197.5" font-family="Vera" font-size="10.00">topo.base.functionfamily.PatternDrivenAnalysis</text>
 </g>
 <!-- param.parameterized.Parameterized&#45;&gt;topo.base.functionfamily.PatternDrivenAnalysis -->
-<g id="edge12" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.base.functionfamily.PatternDrivenAnalysis</title>
+<g id="edge30" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.base.functionfamily.PatternDrivenAnalysis</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M116.253,-134.123C141.62,-147.018 187.951,-169.059 230,-181 241.071,-184.144 252.842,-186.793 264.58,-189.018"/>
 <polygon fill="black" stroke="black" points="264.372,-190.759 269.607,-189.946 265.007,-187.317 264.372,-190.759"/>
 </g>
 <!-- param.parameterized.ParameterizedFunction -->
-<g id="node20" class="node"><title>param.parameterized.ParameterizedFunction</title>
+<g id="node17" class="node"><title>param.parameterized.ParameterizedFunction</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="474,-172.5 240,-172.5 240,-151.5 474,-151.5 474,-172.5"/>
 <text text-anchor="middle" x="357" y="-159.5" font-family="Vera" font-size="10.00">param.parameterized.ParameterizedFunction</text>
 </g>
 <!-- param.parameterized.Parameterized&#45;&gt;param.parameterized.ParameterizedFunction -->
-<g id="edge16" class="edge"><title>param.parameterized.Parameterized&#45;&gt;param.parameterized.ParameterizedFunction</title>
+<g id="edge14" class="edge"><title>param.parameterized.Parameterized&#45;&gt;param.parameterized.ParameterizedFunction</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M165.652,-134.034C201.788,-139.315 246.13,-145.796 283.027,-151.189"/>
 <polygon fill="black" stroke="black" points="283.214,-152.984 288.414,-151.976 283.72,-149.521 283.214,-152.984"/>
 </g>
-<!-- topo.analysis.featureresponses.Feature -->
-<g id="node25" class="node"><title>topo.analysis.featureresponses.Feature</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="460,-134.5 254,-134.5 254,-113.5 460,-113.5 460,-134.5"/>
-<text text-anchor="middle" x="357" y="-121.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.Feature</text>
-</g>
-<!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Feature -->
-<g id="edge22" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Feature</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M194.184,-124C211.983,-124 230.659,-124 248.757,-124"/>
-<polygon fill="black" stroke="black" points="248.845,-125.75 253.845,-124 248.845,-122.25 248.845,-125.75"/>
-</g>
 <!-- topo.analysis.featureresponses.FullMatrix -->
-<g id="node27" class="node"><title>topo.analysis.featureresponses.FullMatrix</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="464,-96.5 250,-96.5 250,-75.5 464,-75.5 464,-96.5"/>
-<text text-anchor="middle" x="357" y="-83.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FullMatrix</text>
+<g id="node19" class="node"><title>topo.analysis.featureresponses.FullMatrix</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="464,-134.5 250,-134.5 250,-113.5 464,-113.5 464,-134.5"/>
+<text text-anchor="middle" x="357" y="-121.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.FullMatrix</text>
 </g>
 <!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.FullMatrix -->
-<g id="edge24" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.FullMatrix</title>
+<g id="edge16" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.FullMatrix</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M194.184,-124C210.654,-124 227.876,-124 244.695,-124"/>
+<polygon fill="black" stroke="black" points="244.901,-125.75 249.901,-124 244.901,-122.25 244.901,-125.75"/>
+</g>
+<!-- topo.analysis.featureresponses.DistributionMatrix -->
+<g id="node27" class="node"><title>topo.analysis.featureresponses.DistributionMatrix</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="484,-96.5 230,-96.5 230,-75.5 484,-75.5 484,-96.5"/>
+<text text-anchor="middle" x="357" y="-83.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.DistributionMatrix</text>
+</g>
+<!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.DistributionMatrix -->
+<g id="edge24" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.DistributionMatrix</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M165.652,-113.966C201.788,-108.685 246.13,-102.204 283.027,-96.8115"/>
 <polygon fill="black" stroke="black" points="283.72,-98.4788 288.414,-96.024 283.214,-95.0156 283.72,-98.4788"/>
 </g>
 <!-- topo.analysis.featureresponses.PatternPresenter -->
-<g id="node30" class="node"><title>topo.analysis.featureresponses.PatternPresenter</title>
+<g id="node29" class="node"><title>topo.analysis.featureresponses.PatternPresenter</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="482,-58.5 232,-58.5 232,-37.5 482,-37.5 482,-58.5"/>
 <text text-anchor="middle" x="357" y="-45.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.PatternPresenter</text>
 </g>
 <!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.PatternPresenter -->
-<g id="edge28" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.PatternPresenter</title>
+<g id="edge26" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.PatternPresenter</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M116.253,-113.877C141.62,-100.982 187.951,-78.9411 230,-67 241.071,-63.8559 252.842,-61.2072 264.58,-58.982"/>
 <polygon fill="black" stroke="black" points="265.007,-60.6827 269.607,-58.054 264.372,-57.2409 265.007,-60.6827"/>
 </g>
 <!-- topo.analysis.featureresponses.Subplotting -->
-<g id="node34" class="node"><title>topo.analysis.featureresponses.Subplotting</title>
+<g id="node36" class="node"><title>topo.analysis.featureresponses.Subplotting</title>
 <polygon fill="none" stroke="black" stroke-width="0.5" points="469,-20.5 245,-20.5 245,0.5 469,0.5 469,-20.5"/>
 <text text-anchor="middle" x="357" y="-7.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.Subplotting</text>
 </g>
 <!-- param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Subplotting -->
-<g id="edge32" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Subplotting</title>
+<g id="edge34" class="edge"><title>param.parameterized.Parameterized&#45;&gt;topo.analysis.featureresponses.Subplotting</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M107.318,-113.923C128.386,-94.0085 178.705,-49.7487 230,-29 237.445,-25.9885 245.31,-23.4483 253.328,-21.3064"/>
 <polygon fill="black" stroke="black" points="253.929,-22.9592 258.338,-20.0236 253.06,-19.5686 253.929,-22.9592"/>
 </g>
-<!-- topo.analysis.featureresponses.UnitCurveCommand -->
-<g id="node11" class="node"><title>topo.analysis.featureresponses.UnitCurveCommand</title>
-<polygon fill="none" stroke="black" stroke-width="0.5" points="2185,-163.5 1919,-163.5 1919,-142.5 2185,-142.5 2185,-163.5"/>
-<text text-anchor="middle" x="2052" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.UnitCurveCommand</text>
-</g>
-<!-- topo.analysis.featureresponses.FeatureCurveCommand&#45;&gt;topo.analysis.featureresponses.UnitCurveCommand -->
-<g id="edge8" class="edge"><title>topo.analysis.featureresponses.FeatureCurveCommand&#45;&gt;topo.analysis.featureresponses.UnitCurveCommand</title>
-<path fill="none" stroke="black" stroke-width="0.5" d="M1882.3,-153C1892.43,-153 1902.64,-153 1912.75,-153"/>
-<polygon fill="black" stroke="black" points="1913.03,-154.75 1918.03,-153 1913.03,-151.25 1913.03,-154.75"/>
-</g>
 <!-- topo.base.functionfamily.PatternDrivenAnalysis&#45;&gt;topo.analysis.featureresponses.FeatureResponses -->
-<g id="edge34" class="edge"><title>topo.base.functionfamily.PatternDrivenAnalysis&#45;&gt;topo.analysis.featureresponses.FeatureResponses</title>
+<g id="edge8" class="edge"><title>topo.base.functionfamily.PatternDrivenAnalysis&#45;&gt;topo.analysis.featureresponses.FeatureResponses</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M477.368,-203.809C497.547,-204.448 518.595,-205.114 539.09,-205.762"/>
 <polygon fill="black" stroke="black" points="539.235,-207.518 544.288,-205.927 539.346,-204.019 539.235,-207.518"/>
 </g>
+<!-- topo.analysis.featureresponses.measure_response -->
+<g id="node14" class="node"><title>topo.analysis.featureresponses.measure_response</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1147,-163.5 885,-163.5 885,-142.5 1147,-142.5 1147,-163.5"/>
+<text text-anchor="middle" x="1016" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.measure_response</text>
+</g>
+<!-- topo.analysis.featureresponses.PatternPresentingCommand -->
+<g id="node15" class="node"><title>topo.analysis.featureresponses.PatternPresentingCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="825,-163.5 521,-163.5 521,-142.5 825,-142.5 825,-163.5"/>
+<text text-anchor="middle" x="673" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.PatternPresentingCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.measure_response -->
+<g id="edge12" class="edge"><title>topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.measure_response</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M825.942,-153C843.751,-153 861.83,-153 879.398,-153"/>
+<polygon fill="black" stroke="black" points="879.833,-154.75 884.833,-153 879.833,-151.25 879.833,-154.75"/>
+</g>
+<!-- topo.analysis.featureresponses.MeasureResponseCommand -->
+<g id="node25" class="node"><title>topo.analysis.featureresponses.MeasureResponseCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1169,-125.5 863,-125.5 863,-104.5 1169,-104.5 1169,-125.5"/>
+<text text-anchor="middle" x="1016" y="-112.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.MeasureResponseCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.MeasureResponseCommand -->
+<g id="edge36" class="edge"><title>topo.analysis.featureresponses.PatternPresentingCommand&#45;&gt;topo.analysis.featureresponses.MeasureResponseCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M763.568,-142.966C811.924,-137.609 871.418,-131.018 920.5,-125.58"/>
+<polygon fill="black" stroke="black" points="920.743,-127.314 925.52,-125.024 920.357,-123.835 920.743,-127.314"/>
+</g>
 <!-- param.parameterized.ParameterizedFunction&#45;&gt;topo.analysis.featureresponses.PatternPresentingCommand -->
-<g id="edge26" class="edge"><title>param.parameterized.ParameterizedFunction&#45;&gt;topo.analysis.featureresponses.PatternPresentingCommand</title>
+<g id="edge20" class="edge"><title>param.parameterized.ParameterizedFunction&#45;&gt;topo.analysis.featureresponses.PatternPresentingCommand</title>
 <path fill="none" stroke="black" stroke-width="0.5" d="M474.218,-158.662C487.593,-158.281 501.386,-157.888 515.178,-157.495"/>
 <polygon fill="black" stroke="black" points="515.311,-159.242 520.259,-157.35 515.211,-155.743 515.311,-159.242"/>
+</g>
+<!-- topo.analysis.featureresponses.SinusoidalMeasureResponseCommand -->
+<g id="node21" class="node"><title>topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1562,-163.5 1206,-163.5 1206,-142.5 1562,-142.5 1562,-163.5"/>
+<text text-anchor="middle" x="1384" y="-150.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.SinusoidalMeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.FeatureCurveCommand -->
+<g id="edge18" class="edge"><title>topo.analysis.featureresponses.SinusoidalMeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.FeatureCurveCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M1562,-153C1572.21,-153 1582.43,-153 1592.51,-153"/>
+<polygon fill="black" stroke="black" points="1592.76,-154.75 1597.76,-153 1592.76,-151.25 1592.76,-154.75"/>
+</g>
+<!-- topo.analysis.featureresponses.SingleInputResponseCommand -->
+<g id="node24" class="node"><title>topo.analysis.featureresponses.SingleInputResponseCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1543,-125.5 1225,-125.5 1225,-104.5 1543,-104.5 1543,-125.5"/>
+<text text-anchor="middle" x="1384" y="-112.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.SingleInputResponseCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SinusoidalMeasureResponseCommand -->
+<g id="edge38" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SinusoidalMeasureResponseCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M1113.17,-125.034C1165.15,-130.402 1229.14,-137.009 1281.86,-142.453"/>
+<polygon fill="black" stroke="black" points="1281.77,-144.203 1286.93,-142.976 1282.13,-140.722 1281.77,-144.203"/>
+</g>
+<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SingleInputResponseCommand -->
+<g id="edge22" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.SingleInputResponseCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M1169.67,-115C1186.01,-115 1202.68,-115 1219.14,-115"/>
+<polygon fill="black" stroke="black" points="1219.25,-116.75 1224.25,-115 1219.25,-113.25 1219.25,-116.75"/>
+</g>
+<!-- topo.analysis.featureresponses.PositionMeasurementCommand -->
+<g id="node34" class="node"><title>topo.analysis.featureresponses.PositionMeasurementCommand</title>
+<polygon fill="none" stroke="black" stroke-width="0.5" points="1546,-87.5 1222,-87.5 1222,-66.5 1546,-66.5 1546,-87.5"/>
+<text text-anchor="middle" x="1384" y="-74.5" font-family="Vera" font-size="10.00">topo.analysis.featureresponses.PositionMeasurementCommand</text>
+</g>
+<!-- topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.PositionMeasurementCommand -->
+<g id="edge32" class="edge"><title>topo.analysis.featureresponses.MeasureResponseCommand&#45;&gt;topo.analysis.featureresponses.PositionMeasurementCommand</title>
+<path fill="none" stroke="black" stroke-width="0.5" d="M1113.17,-104.966C1165.15,-99.5982 1229.14,-92.9912 1281.86,-87.5472"/>
+<polygon fill="black" stroke="black" points="1282.13,-89.2785 1286.93,-87.024 1281.77,-85.797 1282.13,-89.2785"/>
 </g>
 </g>
 </svg>
