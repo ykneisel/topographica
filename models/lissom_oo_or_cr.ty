@@ -82,8 +82,8 @@ for e in eyes:
         default_retina_density=locals().get('default_retina_density',48.0)
         scalingfactor=[1.4*0.9,1.4,1.4*0.97] # from Judah's PhD
         for cone in rgb_cone_types:
-            image_filenames=["images/mcgill/foliage_b/%02d_%d.png"%(i,rgb_cone_types.index(cone)) for i in xrange(1,26)]
-            inputs=[input_type(filename=f, size=10.0,
+            image_filenames=["/group/project/csng/images/mcgill/foliage_b/%02d_%d.png"%(i,rgb_cone_types.index(cone)) for i in xrange(1,26)]
+            inputs=[input_type(filename=f, size=10.0, cache_image=False,
                                x=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=12),
                                y=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=34),
                                orientation=numbergen.UniformRandom(lbound=-pi,ubound=pi,seed=56),
