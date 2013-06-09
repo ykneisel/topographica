@@ -74,12 +74,18 @@ ids=4.0
 num_inputs=1
 input_type=pattern.image.FileImage
 
+image_density = 48.0
+image_scaling = 4.5 
+lgn_density = 24.0
+v1_density = 48.0
+lgn_strength = 1.0
+
 # Convenience variable; number of afferent connections to V1
 num_aff=len(center_polarities)*len(eyes)*len(lags)*len(opponent_types)
 
 for e in eyes:
     for n in lags:
-        default_retina_density=locals().get('default_retina_density',48.0)
+        default_retina_density=locals().get('default_retina_density', image_density * image_scaling)
         scalingfactor=[1.4*0.9,1.4,1.4*0.97] # from Judah's PhD
         for cone in rgb_cone_types:
             image_filenames=["/group/project/csng/images/mcgill/foliage_b/%02d_%d.png"%(i,rgb_cone_types.index(cone)) for i in xrange(1,26)]
@@ -102,59 +108,59 @@ for e in eyes:
         for l in center_polarities:
             for opponent in opponent_types:
                 topo.sim[e+opponent+' LGN'+l+n]=sheet.CFSheet(
-                    nominal_density=24.0,
+                    nominal_density= lgn_density,
                     nominal_bounds=sheet.BoundingBox(radius=0.5+0.27083),
                     output_fns=[transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)],
                     measure_maps=False)
 
 
 topo.sim['V1'] = sheet.SettlingCFSheet(
-    nominal_density=locals().get('default_density',48.0),tsettle=9,
+    nominal_density=locals().get('default_density', v1_density),tsettle=9,
     nominal_bounds=sheet.BoundingBox(radius=0.5),
     output_fns=[transferfn.PiecewiseLinear(lower_bound=0.076,upper_bound=0.626)])
 
 # DoG weights for the LGN
-centerg   = pattern.Gaussian(size=0.07385,aspect_ratio=1.0,output_fns=[transferfn.DivisiveNormalizeL1()])
-surroundg = pattern.Gaussian(size=0.29540,aspect_ratio=1.0,output_fns=[transferfn.DivisiveNormalizeL1()])
+centerg   = pattern.Gaussian(size=0.07385 / image_scaling,aspect_ratio=1.0,output_fns=[transferfn.DivisiveNormalizeL1()])
+surroundg = pattern.Gaussian(size=0.29540 / 2.36,aspect_ratio=1.0,output_fns=[transferfn.DivisiveNormalizeL1()])
 
 for e in eyes:
     for n in lags:
         for l in center_polarities:
             for cone in rg_cone_types:
                 topo.sim.connect(e+cone+'Retina'+n,
-                                 e+cone+'-'+rg_cone_types[rg_cone_types.index(cone)-1]+' LGN'+l+n, delay=0.05,
-                                 connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**center_polarities.index(l),
+                                 e+cone+'-'+rg_cone_types[rg_cone_types.index(cone)-1]+' LGN'+l+n, delay=0.10,
+                                 connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**center_polarities.index(l),
                                  nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                                  name='AfferentCenter', weights_generator=centerg)
 
                 topo.sim.connect(e+cone+'Retina'+n,
-                                 e+rg_cone_types[rg_cone_types.index(cone)-1]+'-'+cone+' LGN'+l+n, delay=0.05,
-                                 connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**(1+center_polarities.index(l)),
+                                 e+rg_cone_types[rg_cone_types.index(cone)-1]+'-'+cone+' LGN'+l+n, delay=0.10,
+                                 connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**(1+center_polarities.index(l)),
                                  nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                                  name='AfferentSurround', weights_generator=surroundg)
 
                 topo.sim.connect(e+cone+'Retina'+n,
-                                 e+'Blue-RedGreen'+' LGN'+l+n, delay=0.05,
-                                 connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**(1+center_polarities.index(l))/2,
+                                 e+'Blue-RedGreen'+' LGN'+l+n, delay=0.10,
+                                 connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**(1+center_polarities.index(l))/2,
                                  nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                                  name='AfferentCenter'+cone, weights_generator=centerg)
 
             topo.sim.connect(e+'Blue'+'Retina'+n,
-                             e+'Blue-RedGreen'+' LGN'+l+n, delay=0.05,
-                             connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**center_polarities.index(l),
+                             e+'Blue-RedGreen'+' LGN'+l+n, delay=0.10,
+                             connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**center_polarities.index(l),
                              nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                              name='AfferentCenter'+'Blue', weights_generator=centerg)
 
             for cone in rgb_cone_types:
                 topo.sim.connect(e+cone+'Retina'+n,
-                                 e+'Luminosity LGN'+l+n, delay=0.05,
-                                 connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**center_polarities.index(l)/3,
+                                 e+'Luminosity LGN'+l+n, delay=0.10,
+                                 connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**center_polarities.index(l)/3,
                                  nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                                  name='AfferentCenter'+cone, weights_generator=centerg)
 
                 topo.sim.connect(e+cone+'Retina'+n,
-                                 e+'Luminosity LGN'+l+n, delay=0.05,
-                                 connection_type=projection.SharedWeightCFProjection, strength=4.7*(-1)**(1+center_polarities.index(l))/3,
+                                 e+'Luminosity LGN'+l+n, delay=0.10,
+                                 connection_type=projection.SharedWeightCFProjection, strength=lgn_strength*4.7*(-1)**(1+center_polarities.index(l))/3,
                                  nominal_bounds_template=sheet.BoundingBox(radius=0.375),
                                  name='AfferentSurround'+cone, weights_generator=surroundg)
 
@@ -210,5 +216,5 @@ topo.sim.grid_layout([vs,ls,es], xstep=70/len(eyes), ystep=200, item_scale=0.75/
 # Measure feature maps based on unthresholded initial response for
 # speed and reliability
 from topo.analysis.featureresponses import MeasureResponseCommand
-MeasureResponseCommand.duration=0.175
+MeasureResponseCommand.duration=0.225
 MeasureResponseCommand.apply_output_fns=False

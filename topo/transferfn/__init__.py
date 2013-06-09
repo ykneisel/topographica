@@ -55,6 +55,24 @@ class PiecewiseLinear(TransferFn):
 
 
 
+class BinaryInterval(TransferFn):
+    """
+    TransferFn with lower and upper thresholds and binary output.
+
+    Values below the lower threshold and above or equal the upper 
+    threshold are set to zero, while those in between are set to one.
+    """
+    
+    lower_bound = param.Number(default=0.0, softbounds=(0.0,1.0))
+    upper_bound = param.Number(default=1.0, softbounds=(0.0,1.0))
+
+    def __call__(self,x):
+        within_thresholds = ((x >= self.lower_bound) & (x < self.upper_bound))
+        x *= 0.0
+        x += within_thresholds
+
+
+
 class Sigmoid(TransferFn):
     """
     Sigmoidal (logistic) transfer function: 1/(1+exp-(r*x+k)).

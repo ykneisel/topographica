@@ -1,0 +1,46 @@
+import topo, time
+from topo.command.analysis import save_plotgroup
+from topo.base.projection import ProjectionSheet
+from topo.pattern import Gaussian
+from math import pi
+
+def analysis_function(img_sheet_name):
+    path = "/afs/inf.ed.ac.uk/user/s12/s1265540/"
+    img_path = "/group/project/csng/images/mcgill/foliage_b/"
+
+    save_plotgroup("Orientation Preference", saver_params={"filename_prefix":"Orientation_Preference_"}, desired_maximum_plot_height = 200)
+    save_plotgroup("Hue Preference", saver_params={"filename_prefix":"Hue_Preference_"}, desired_maximum_plot_height = 200)
+
+    for img in [1,2,8,12,25]:
+        image_filenames=[img_path + "%02d_%d.png"%(img,i) for i in range (0,3)]
+        inputs=[input_type(filename=f, size=10.0, cache_image=False,
+                       x=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=12),
+                       y=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=34),
+                       orientation=numbergen.UniformRandom(lbound=-pi,ubound=pi,seed=56),
+                       scale=numbergen.UniformRandom(lbound=0,ubound=2,seed=78)*scalingfactor[rgb_cone_types.index(cone)])
+                       for f in image_filenames]
+        pattern_present(inputs={'Red' + img_sheet_name:inputs[0], 'Green' + img_sheet_name:inputs[1], 'Blue' + img_sheet_name:inputs[2]})
+        save_plotgroup("Activity", saver_params={"filename_prefix":"Activity_"+str(img)+"_"}, desired_maximum_plot_height = 200)
+
+        matrixplot(topo.sim['V1'].activity, filename=path + 'Documents/Topographica/Activity_' + str(img) + '_' + time.strftime("%Y%m%d%H%M") + '_V1_')
+
+    save_plotgroup("Connection Fields", saver_params={"filename_prefix":"Connection_Fields_"}, desired_maximum_plot_height = 200)
+    save_plotgroup("Projection Activity", saver_params={"filename_prefix":"Projection_Activity_"}, desired_maximum_plot_height = 200)
+    
+    # Plot projections from each measured map
+    measured_sheets = [s for s in topo.sim.objects(ProjectionSheet).values()
+                       if hasattr(s,'measure_maps') and s.measure_maps]
+    for s in measured_sheets:
+        for p in s.in_connections:
+            save_plotgroup("Projection",projection=p, saver_params={"filename_prefix":"Projection_"}, desired_maximum_plot_height=200)
+
+    # Test response to a standardized pattern
+    pattern_present(inputs=Gaussian(orientation=pi/4,aspect_ratio=4.7))
+    save_plotgroup("Activity",saver_params={"filename_prefix":"Activity_45d_"}, desired_maximum_plot_height=200)
+
+def random_analysis_function():
+    analysis_function("Image");
+
+def lissom_analysis_function():
+    analysis_function("Retina");
+
