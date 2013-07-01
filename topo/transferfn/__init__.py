@@ -20,7 +20,7 @@ import copy
 import param
 
 import numpy, numpy.random
-from numpy import exp,zeros,ones,power
+from numpy import exp,zeros,ones,power, floor, ceil, sqrt
 
 import topo
 import topo.base.functionfamily
@@ -631,6 +631,82 @@ class Hysteresis(TransferFnWithState):
     def state_pop(self):
         self.old_a,self.first_call =  self.__current_state_stack.pop()
         super(Hysteresis,self).state_pop()
+
+
+
+class CartesianToHex(TransferFn):
+    """
+    Rearranges array entries to form a hex-grid layout.
+    
+    Note: A multiple of 14 (or at least 7 is recommended for hex_width.
+    """
+   
+    hex_width = param.Number(default = 14.0)
+    
+    def __call__(self,x):
+        width = self.hex_width
+        height = round(width * 2 / sqrt(3))
+        top_height = floor(height / 4)
+        row_height = height - top_height
+        top_area = row_height * width - ((row_height - top_height) * width)
+
+#        print "-------------------------"
+#        print "-------------------------"
+#        print "height: "+str(height)
+#        print "top_height: " + str(top_height)
+#        print "row_height: " + str(row_height)
+#        print "top_area: " + str(top_area)
+
+        x_copy = x.copy()
+        x *= 0.0
+        for row in range(0, int(ceil(x.shape[0] / row_height))):
+            for col in range(0, int(ceil(x.shape[1] / width))):
+                base_row = row * row_height
+                base_col = col * width + (row % 2) * ceil(width / 2)
+
+#                print "current base_row: " + str(base_row)
+#                print "current base_col: " + str(base_col)
+                    
+                row_index = base_row + height / 2
+                col_index = base_col + width / 2
+                if (row_index < x_copy.shape[0] and col_index < x_copy.shape[1]):
+                    value = x_copy[row_index, col_index]
+                    start_col, length = self.calculate_start_col_and_length(top_height, top_area, base_col, width, row)
+ 
+                    for top_row in range(0, int(top_height)):
+                        if (base_row + height < x.shape[0]):
+                            x[base_row + top_row, start_col[top_row, 0] : start_col[top_row, 0] + length[top_row, 0]] = value
+                            x[base_row + top_height : base_row + row_height, base_col : base_col + width] = value
+                            x[base_row + height - top_row - 1, start_col[top_row, 1] : start_col[top_row, 1] + length[top_row, 1]] = value
+               
+
+    def calculate_start_col_and_length(self, height, area, base_col, width, row):
+        start_col = zeros((height, 2))
+        length = zeros((height, 2))
+        for top_row in range(0, int(height)):
+            if (height % 2 == 0):
+                length[top_row, :] = 2 * (top_row + 1 + (top_row + 1) / 2)
+            else:
+                length[top_row, :] = 2 * (length[top_row - 1, 0] if top_row > 0 else 1)
+
+            if (top_row + 1 == height):
+                row_to_adapt = (top_row if (height % 2 == 0) else (height / 2))
+                length[row_to_adapt, 0] += floor((area - length.sum()) / 2)
+                length[row_to_adapt, 1] += ceil((area - length.sum()) / 2)
+
+            start_col[top_row, :] = base_col + (width - length[top_row, 0]) / 2
+            if (start_col[top_row, 0] != int(start_col[top_row, 0])):
+                start_col[top_row, :] = ceil(start_col[top_row, 0])
+                start_col[top_row, 1] -= (row % 2 if (width % 2) else 0)
+
+#            print "current top_row: " + str(top_row)
+#            print "current length: " + str(length[top_row, :])
+#            print "current total: " + str(length.sum())
+#            print "current start_col: " + str(start_col[top_row, :])
+#            print "-----"
+    
+        return start_col, length
+
 
 
 _public = list(set([_k for _k,_v in locals().items() if isinstance(_v,type) and issubclass(_v,TransferFn)]))

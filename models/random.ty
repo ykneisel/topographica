@@ -38,7 +38,9 @@ params.add(
         The strength to use for LGN afferent connections."""),
 
     duration = param.Number(default = 0.225, doc = """
-        The duration to present the image."""))
+        The duration to present the image."""),
+
+    ids = param.Number(default = 4.0))
 
 eyes=['']
 center_polarities=['On','Off']
@@ -46,12 +48,12 @@ rgb_cone_types = ['Red', 'Green', 'Blue']
 cone_probabilities = [0.53, 0.38, 0.09] # cone distributions from Roorda et al.: 482 R / 344 G / 78 B
 
 default_image_density=locals().get('default_image_density', params.density)
- 
+
 input_type=pattern.image.FileImage
 scalingfactor=[1.4*0.9,1.4,1.4*0.97] # from Judah's PhD
 surround_radius_in_cells = 6.0 / 2
 
-ids=4.0
+ids=params.ids
 num_aff = len(center_polarities) * len(eyes)
 
 for e in eyes:
@@ -74,12 +76,13 @@ for e in eyes:
             period=1.0, phase=0.05,
             nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375))
 
+    cone_density = 14.0
     topo.sim[e+'Cones']=sheet.CFSheet(
         precedence = 0.4,
-        nominal_density = params.density,
+        nominal_density = params.density * cone_density,
         nominal_bounds = sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375),
+        output_fns = [transferfn.CartesianToHex(hex_width = cone_density)],
         measure_maps=False)
-
 
     for cone in rgb_cone_types:
         pattern.random.seed(seed)
@@ -94,7 +97,7 @@ topo.sim['V1'] = sheet.SettlingCFSheet(
     nominal_bounds=sheet.BoundingBox(radius=0.5),
     output_fns=[transferfn.PiecewiseLinear(lower_bound=0.076,upper_bound=0.626)])
 
-surround_radius = surround_radius_in_cells / topo.sim[eyes[0] + 'Cones'].xdensity
+surround_radius = surround_radius_in_cells / topo.sim[eyes[0] + 'Cones'].xdensity * cone_density
 surroundg = pattern.Gaussian(size=surround_radius, aspect_ratio=1.0, output_fns=[transferfn.DivisiveNormalizeL1()])
 for e in eyes:
     for polarity in center_polarities:
