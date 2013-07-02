@@ -10,7 +10,7 @@ automatically become available for any model.
 # Imported here so that all Sheets will be in the same package
 from topo.base.sheet import Sheet
 from topo.base.projection import ProjectionSheet  # pyflakes:ignore (API import)
-from topo.base.cf import CFSheet
+from topo.base.cf import CFSheet, HexGridCFSheet
 from topo.misc.generatorsheet import GeneratorSheet
 
 # Imported here for ease of access by users

@@ -1,0 +1,142 @@
+"""
+"""
+
+from math import pi
+import numpy
+import random
+
+from topo import learningfn,numbergen,transferfn,pattern,projection,responsefn,sheet
+
+import topo.learningfn.optimized
+import topo.learningfn.projfn
+import topo.transferfn.optimized
+import topo.pattern.random
+import topo.pattern.image
+import topo.responsefn.optimized
+import topo.sheet.lissom
+import topo.sheet.optimized
+
+
+### Specify weight initialization, response function, and learning function
+projection.CFProjection.cf_shape=pattern.Disk(smoothing=0.0)
+projection.CFProjection.weights_generator=pattern.Constant()
+projection.CFProjection.response_fn=responsefn.optimized.CFPRF_DotProduct_opt()
+projection.CFProjection.learning_fn=learningfn.optimized.CFPLF_Hebbian_opt()
+projection.CFProjection.weights_output_fns=[transferfn.optimized.CFPOF_DivisiveNormalizeL1_opt()]
+projection.SharedWeightCFProjection.response_fn=responsefn.optimized.CFPRF_DotProduct_opt()
+
+eyes=['']
+center_polarities=['On','Off']
+rgb_cone_types = ['Red', 'Green', 'Blue']
+cone_probabilities = [0.53, 0.38, 0.09] # cone distributions from Roorda et al.: 482 R / 344 G / 78 B
+
+density = 24.0
+v1_density = 48.0
+default_image_density=locals().get('default_image_density', density)
+ 
+input_type=pattern.image.FileImage
+scalingfactor=[1.4*0.9,1.4,1.4*0.97] # from Judah's PhD
+ids=4.0
+num_aff = len(center_polarities) * len(eyes)
+
+for e in eyes:
+    seed = (random.randint(1, 500), random.randint(1, 500))
+    thresholds = 0, 0
+    
+    for cone in rgb_cone_types:
+        image_filenames=["/group/project/csng/images/mcgill/foliage_b/%02d_%d.png"%(i,rgb_cone_types.index(cone)) for i in xrange(1,26)]
+        inputs=[input_type(filename=f, size=10.0, cache_image=False,
+                           x=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=12),
+                           y=numbergen.UniformRandom(lbound=-0.75,ubound=0.75,seed=34),
+                           orientation=numbergen.UniformRandom(lbound=-pi,ubound=pi,seed=56),
+                           scale=2.0-numbergen.UniformRandom(lbound=0,ubound=2,seed=78)*scalingfactor[rgb_cone_types.index(cone)] \
+                           if e=='Right' else numbergen.UniformRandom(lbound=0,ubound=2,seed=78)*scalingfactor[rgb_cone_types.index(cone)])
+                for f in image_filenames]
+
+        topo.sim[e+cone+'Image']=sheet.GeneratorSheet(
+            nominal_density=default_image_density,
+            input_generator=pattern.Selector(generators=inputs),
+            period=1.0, phase=0.05,
+            nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375))
+
+    topo.sim[e+'Cones']=sheet.HexGridCFSheet(
+        precedence = 0.4,
+        nominal_density = density,
+        nominal_bounds = sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375),
+        output_fns = [transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)])
+
+    for cone in rgb_cone_types:
+        pattern.random.seed(seed)
+        thresholds = thresholds[1], thresholds[1] + cone_probabilities[rgb_cone_types.index(cone)]
+        topo.sim.connect(e+cone+'Image', e+'Cones', delay=0.05,
+             name=cone+'Afferent', connection_type=projection.OneToOneProjection,
+             weights_generator = pattern.random.UniformRandom(output_fns=[transferfn.BinaryInterval(
+                                                              lower_bound = thresholds[0], upper_bound = thresholds[1])]))
+
+topo.sim['V1'] = sheet.SettlingCFSheet(
+    nominal_density=locals().get('default_density', v1_density),tsettle=9,
+    nominal_bounds=sheet.BoundingBox(radius=0.5),
+    output_fns=[transferfn.PiecewiseLinear(lower_bound=0.076,upper_bound=0.626)])
+
+connection_field_radius = 3.35 / topo.sim[eyes[0] + 'Cones'].xdensity
+surroundg = pattern.Gaussian(size=0.29540, aspect_ratio=1.0, output_fns=[transferfn.DivisiveNormalizeL1()])
+for e in eyes:
+    for polarity in center_polarities:
+        topo.sim[e + 'RGC' + polarity]=sheet.CFSheet(
+            nominal_density=density,
+            nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083),
+            output_fns=[transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)],
+            measure_maps=False)
+        
+        topo.sim.connect(e + 'Cones', e + 'RGC' + polarity, delay=0.05,
+            connection_type = projection.OneToOneProjection, 
+            strength = 2.3 * (-1)**center_polarities.index(polarity),
+            name = 'AfferentCenter')
+        topo.sim.connect(e + 'Cones', e + 'RGC' + polarity, delay=0.05,
+            connection_type = projection.CFProjection, 
+            strength = 2.3 * (-1)**(1 + center_polarities.index(polarity)),
+            nominal_bounds_template=sheet.BoundingBox(radius = connection_field_radius),
+            name = 'AfferentSurround', weights_generator = surroundg)
+            
+        topo.sim.connect(e + 'RGC' + polarity, 'V1', delay=0.05, dest_port=('Activity', 'JointNormalize', 'Afferent'),
+                         connection_type=projection.CFProjection, strength=1.0, name= e + 'RGC' + polarity + 'Afferent',
+                         weights_generator=pattern.random.GaussianCloud(gaussian_size=2*0.27083),
+                         nominal_bounds_template=sheet.BoundingBox(radius=0.27083),
+                         learning_rate=0.9590/num_aff/ids)
+            
+
+topo.sim.connect('V1','V1',delay=0.05,name='LateralExcitatory',
+                 connection_type=projection.ResizableCFProjection,strength=1.2,
+                 weights_generator=pattern.random.GaussianCloud(gaussian_size=2*0.10417),
+                 nominal_bounds_template=sheet.BoundingBox(radius=0.10417),learning_rate=2.55528/ids)
+
+topo.sim.connect('V1','V1',delay=0.05,name='LateralInhibitory',
+                 connection_type=projection.CFProjection,strength=-1.75,
+                 weights_generator=pattern.random.GaussianCloud(gaussian_size=2*0.22917),
+                 nominal_bounds_template=sheet.BoundingBox(radius=0.22917),learning_rate=1.80873/ids/5)
+
+
+### Actions scheduled to occur as the simulation proceeds.
+sheet.lissom.schedule_events("topo.sim['V1']",st=1.0/2.0,
+                             aff_name="Afferent",ids=ids,
+                             increase_inhibition=True)
+# default locations for model editor
+cones=[]
+images=[]
+rgc = []
+v1 = [None]*(num_aff-1) + ['V1'] + [None]*(num_aff)
+for e in eyes:
+    rgc += [None] * 2 + [e + 'RGCOn'] + [None] * 3 + [e + 'RGCOff'] + [None] * 2
+    for cone in rgb_cone_types:
+        images += [None, e + cone + 'Image', None]
+    cones += [None] * 4 + [e + 'Cones'] + [None] * 4
+topo.sim.grid_layout([v1, rgc, cones, images], xstep=70/len(eyes), ystep=200, item_scale=0.75/len(eyes))
+
+
+### Set up appropriate defaults for analysis
+
+# Measure feature maps based on unthresholded initial response for
+# speed and reliability
+from topo.analysis.featureresponses import MeasureResponseCommand
+MeasureResponseCommand.duration=0.175
+MeasureResponseCommand.apply_output_fns=False

@@ -910,6 +910,58 @@ class CFSheet(ProjectionSheet):
         self.release_sheet_view(('Weights',x,y))
 
 
+class HexGridCFSheet(CFSheet):
+    """
+    
+    """
+
+    """
+    row = floor((self.top_bounds - y) * self.density)
+    +        x_offset = self.hex_width * 0.25
+    +        if row%2 == 0:
+    +            hex_x = x - x_offset
+    +        else:
+    +            hex_x = x + x_offset
+    +            
+    +        y_offset = self.hex_height * 0.75
+    +        hex_y = self.top_bounds - (self.hex_height / 2 + y_offset * row)
+    """
+
+    def sheet2matrix(self,x,y):
+        hex_width = 1 / self.xdensity
+        hex_height = hex_width * 2 / np.sqrt(3)
+
+        c = (x-self.lbrt[0]) * self.xdensity
+        r = (self.lbrt[3]-y) * self.ydensity
+        return r, c
+
+
+    def sheet2matrixidx(self,x,y):
+        c = (x-self.lbrt[0]) * self.xdensity
+        r = (self.lbrt[3]-y) * self.ydensity
+        r = np.floor(r)
+        c = np.floor(c)
+
+        # CB: was it better to have two different methods?
+        if hasattr(r,'astype'):
+            return r.astype(int), c.astype(int)
+        else:
+            return int(r),int(c)
+        
+
+    def matrix2sheet(self,float_row,float_col):
+        x = float_col* (1.0/self.xdensity) + self.lbrt[0]
+        y = self.lbrt[3] - float_row* (1.0 / self.ydensity)
+        return x,y
+
+
+    def matrixidx2sheet(self,float_row,float_col):
+        row = float_row + 0.5
+        col = float_col + 0.5
+        x = col* (1.0/self.xdensity) + self.lbrt[0]
+        y = self.lbrt[3] - row* (1.0 / self.ydensity)
+        return np.round_(x,10),np.round_(y,10)
+
 
 
 class ResizableCFProjection(CFProjection):
