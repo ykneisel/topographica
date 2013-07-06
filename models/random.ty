@@ -6,6 +6,7 @@ import numpy
 import random
 
 from topo import learningfn,numbergen,transferfn,pattern,projection,responsefn,sheet
+from topo.base.projection import ConeTypeMask
 
 import topo.learningfn.optimized
 import topo.learningfn.projfn
@@ -79,28 +80,30 @@ topo.sim['V1'] = sheet.SettlingCFSheet(
 
 connection_field_radius = 3.35 / topo.sim[eyes[0] + rgb_cone_types[0] + 'Cones'].xdensity
 surroundg = pattern.Gaussian(size=0.29540, aspect_ratio=1.0, output_fns=[transferfn.DivisiveNormalizeL1()])
+
 for e in eyes:
     for polarity in center_polarities:
-        topo.sim[e + 'RGC' + polarity]=sheet.CFSheet(
-            nominal_density=density,
-            nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083),
-            output_fns=[transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)],
-            measure_maps=False)
-        
-        strength = 2.3 
         for cone in rgb_cone_types:
-            topo.sim.connect(e + cone + 'Cones', e + 'RGC' + polarity, delay=0.05,
-                connection_type = projection.OneToOneProjection, 
-                strength = strength * (-1)**center_polarities.index(polarity),
-                name = cone + 'AfferentCenter')
-            topo.sim.connect(e + cone + 'Cones', e + 'RGC' + polarity, delay=0.05,
-                connection_type = projection.CFProjection, 
-                strength = strength * (-1)**(1 + center_polarities.index(polarity)),
-                nominal_bounds_template=sheet.BoundingBox(radius = connection_field_radius),
-                name = cone + 'AfferentSurround', weights_generator = surroundg)
-            
-        topo.sim.connect(e + 'RGC' + polarity, 'V1', delay=0.05, dest_port=('Activity', 'JointNormalize', 'Afferent'),
-                         connection_type=projection.CFProjection, strength=1.0, name= e + 'RGC' + polarity + 'Afferent',
+            topo.sim[e + cone + 'RGC' + polarity]=sheet.CFSheet(
+                nominal_density=density,
+                nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083),
+                output_fns=[transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)],
+                measure_maps=False, mask = ConeTypeMask(cone_type = rgb_cone_types.index(cone)))
+       
+            strength = 2.3 
+            for cone2 in rgb_cone_types:
+                topo.sim.connect(e + cone2 + 'Cones', e + cone + 'RGC' + polarity, delay=0.05,
+                    connection_type = projection.OneToOneProjection, 
+                    strength = strength * (-1)**center_polarities.index(polarity),
+                    name = cone2 + 'To' + cone + 'AfferentCenter')
+                topo.sim.connect(e + cone2 + 'Cones', e + cone + 'RGC' + polarity, delay=0.05,
+                    connection_type = projection.CFProjection, 
+                    strength = strength * (-1)**(1 + center_polarities.index(polarity)),
+                    nominal_bounds_template=sheet.BoundingBox(radius = connection_field_radius),
+                    name = cone2 + 'To' + cone + 'AfferentSurround', weights_generator = surroundg)
+        
+            topo.sim.connect(e + cone + 'RGC' + polarity, 'V1', delay=0.05, dest_port=('Activity', 'JointNormalize', 'Afferent'),
+                         connection_type=projection.CFProjection, strength=1.0, name= e + cone + 'RGC' + polarity + 'Afferent',
                          weights_generator=pattern.random.GaussianCloud(gaussian_size=2*0.27083),
                          nominal_bounds_template=sheet.BoundingBox(radius=0.27083),
                          learning_rate=0.9590/num_aff/ids)
@@ -127,10 +130,10 @@ images=[]
 rgc = []
 v1 = [None]*(num_aff-1) + ['V1'] + [None]*(num_aff)
 for e in eyes:
-    rgc += [None] * 2 + [e + 'RGCOn'] + [None] * 3 + [e + 'RGCOff'] + [None] * 2
     for cone in rgb_cone_types:
-        images += [None, e + cone + 'Image', None]
-    cones += [None] * 4 + [e + cone + 'Cones'] + [None] * 4
+        rgc += [e + cone + 'RGCOn'] + [None] + [e + cone + 'RGCOff'] + [None]
+        images += [None, e + cone + 'Image', None, None]
+        cones += [None, e + cone + 'Cones', None, None]
 topo.sim.grid_layout([v1, rgc, cones, images], xstep=70/len(eyes), ystep=200, item_scale=0.75/len(eyes))
 
 

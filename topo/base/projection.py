@@ -94,6 +94,10 @@ class SheetMask(param.Parameterized):
         mask.
         """
         pass
+    
+    def get_active_units(self):
+        pass
+
 
 
 class CompositeSheetMask(SheetMask):
@@ -479,7 +483,10 @@ class ProjectionSheet(Sheet):
         if self.apply_output_fns:
             for of in self.output_fns:
                 of(self.activity)
-
+        
+        if isinstance(self.mask, ConeTypeMask):
+            self.activity[self.mask.get_active_units() == 0] = 0
+        
         self.send_output(src_port='Activity',data=self.activity)
 
 
@@ -664,3 +671,11 @@ class NeighborhoodMask(SheetMask):
                 cc = max(0,c-matradius)
                 neighbourhood = self.sheet.activity[rr:r+matradius+1,cc:c+matradius+1].ravel()
                 self.data[r][c] = sometrue(neighbourhood>self.threshold)
+
+class ConeTypeMask(SheetMask):
+    cone_type = param.Number()
+
+    def get_active_units(self):
+        projection_activity = self.sheet.in_connections[self.cone_type * 2].activity.copy()
+        projection_activity[projection_activity != 0] = 1
+        return projection_activity
