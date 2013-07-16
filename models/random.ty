@@ -23,34 +23,19 @@ projection.CFProjection.weights_generator=pattern.Constant()
 projection.CFProjection.response_fn=responsefn.optimized.CFPRF_DotProduct_opt()
 projection.CFProjection.learning_fn=learningfn.optimized.CFPLF_Hebbian_opt()
 projection.CFProjection.weights_output_fns=[transferfn.optimized.CFPOF_DivisiveNormalizeL1_opt()]
-
-from topo.misc.commandline import global_params as params
-params.add(
-    density=param.Number(default=24.0,bounds=(0,None),
-        inclusive_bounds=(False,True),doc="""
-        The nominal_density to use for the retina."""),
-
-    cortex_density=param.Number(default=48.0,bounds=(0,None),
-        inclusive_bounds=(False,True),doc="""
-        The nominal_density to use for V1."""),
-
-    lgn_strength = param.Number(default = 1.8, doc = """
-        The strength to use for LGN afferent connections."""),
-
-    duration = param.Number(default = 0.225, doc = """
-        The duration to present the image."""))
+projection.SharedWeightCFProjection.response_fn=responsefn.optimized.CFPRF_DotProduct_opt()
 
 eyes=['']
 center_polarities=['On','Off']
 rgb_cone_types = ['Red', 'Green', 'Blue']
 cone_probabilities = [0.53, 0.38, 0.09] # cone distributions from Roorda et al.: 482 R / 344 G / 78 B
 
-default_image_density=locals().get('default_image_density', params.density)
+density = 24.0
+v1_density = 48.0
+default_image_density=locals().get('default_image_density', density)
  
 input_type=pattern.image.FileImage
 scalingfactor=[1.4*0.9,1.4,1.4*0.97] # from Judah's PhD
-surround_radius_in_cells = 6.0 / 2
-
 ids=4.0
 num_aff = len(center_polarities) * len(eyes)
 
@@ -74,46 +59,45 @@ for e in eyes:
             period=1.0, phase=0.05,
             nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375))
 
-    topo.sim[e+'Cones']=sheet.CFSheet(
-        precedence = 0.4,
-        nominal_density = params.density,
-        nominal_bounds = sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375),
-        measure_maps=False)
+        topo.sim[e+cone+'Cones']=sheet.CFSheet(
+            precedence = 0.4,
+            nominal_density = density,
+            nominal_bounds = sheet.BoundingBox(radius=0.5 + 0.27083 + 0.375),
+            output_fns = [transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)])
 
-
-    for cone in rgb_cone_types:
         pattern.random.seed(seed)
         thresholds = thresholds[1], thresholds[1] + cone_probabilities[rgb_cone_types.index(cone)]
-        topo.sim.connect(e+cone+'Image', e+'Cones', delay=0.05,
+        topo.sim.connect(e+cone+'Image', e+cone+'Cones', delay=0.05,
              name=cone+'Afferent', connection_type=projection.OneToOneProjection,
              weights_generator = pattern.random.UniformRandom(output_fns=[transferfn.BinaryInterval(
                                                               lower_bound = thresholds[0], upper_bound = thresholds[1])]))
 
 topo.sim['V1'] = sheet.SettlingCFSheet(
-    nominal_density=locals().get('default_density', params.cortex_density),tsettle=9,
+    nominal_density=locals().get('default_density', v1_density),tsettle=9,
     nominal_bounds=sheet.BoundingBox(radius=0.5),
     output_fns=[transferfn.PiecewiseLinear(lower_bound=0.076,upper_bound=0.626)])
 
-surround_radius = surround_radius_in_cells / topo.sim[eyes[0] + 'Cones'].xdensity
-surroundg = pattern.Gaussian(size=surround_radius, aspect_ratio=1.0, output_fns=[transferfn.DivisiveNormalizeL1()])
+connection_field_radius = 3.35 / topo.sim[eyes[0] + rgb_cone_types[0] + 'Cones'].xdensity
+surroundg = pattern.Gaussian(size=0.29540, aspect_ratio=1.0, output_fns=[transferfn.DivisiveNormalizeL1()])
 for e in eyes:
     for polarity in center_polarities:
         topo.sim[e + 'RGC' + polarity]=sheet.CFSheet(
-            nominal_density=params.density,
+            nominal_density=density,
             nominal_bounds=sheet.BoundingBox(radius=0.5 + 0.27083),
             output_fns=[transferfn.PiecewiseLinear(lower_bound=0.0,upper_bound=1.0)],
             measure_maps=False)
-
-        strength = 4.7 
-        topo.sim.connect(e + 'Cones', e + 'RGC' + polarity, delay=0.05,
-            connection_type = projection.OneToOneProjection, 
-            strength = strength * (-1)**center_polarities.index(polarity),
-            name = 'AfferentCenter')
-        topo.sim.connect(e + 'Cones', e + 'RGC' + polarity, delay=0.05,
-            connection_type = projection.CFProjection, 
-            strength = strength * (-1)**(1 + center_polarities.index(polarity)),
-            nominal_bounds_template=sheet.BoundingBox(radius = 0.375),
-            name = 'AfferentSurround', weights_generator = surroundg)
+        
+        strength = 2.3 
+        for cone in rgb_cone_types:
+            topo.sim.connect(e + cone + 'Cones', e + 'RGC' + polarity, delay=0.05,
+                connection_type = projection.OneToOneProjection, 
+                strength = strength * (-1)**center_polarities.index(polarity),
+                name = cone + 'AfferentCenter')
+            topo.sim.connect(e + cone + 'Cones', e + 'RGC' + polarity, delay=0.05,
+                connection_type = projection.CFProjection, 
+                strength = strength * (-1)**(1 + center_polarities.index(polarity)),
+                nominal_bounds_template=sheet.BoundingBox(radius = connection_field_radius),
+                name = cone + 'AfferentSurround', weights_generator = surroundg)
             
         topo.sim.connect(e + 'RGC' + polarity, 'V1', delay=0.05, dest_port=('Activity', 'JointNormalize', 'Afferent'),
                          connection_type=projection.CFProjection, strength=1.0, name= e + 'RGC' + polarity + 'Afferent',
@@ -137,17 +121,16 @@ topo.sim.connect('V1','V1',delay=0.05,name='LateralInhibitory',
 sheet.lissom.schedule_events("topo.sim['V1']",st=1.0/2.0,
                              aff_name="Afferent",ids=ids,
                              increase_inhibition=True)
-
 # default locations for model editor
 cones=[]
 images=[]
 rgc = []
-v1 = [None] * 4 + ['V1'] + [None] * 4
+v1 = [None]*(num_aff-1) + ['V1'] + [None]*(num_aff)
 for e in eyes:
     rgc += [None] * 2 + [e + 'RGCOn'] + [None] * 3 + [e + 'RGCOff'] + [None] * 2
     for cone in rgb_cone_types:
         images += [None, e + cone + 'Image', None]
-    cones += [None] * 4 + [e + 'Cones'] + [None] * 4
+    cones += [None] * 4 + [e + cone + 'Cones'] + [None] * 4
 topo.sim.grid_layout([v1, rgc, cones, images], xstep=70/len(eyes), ystep=200, item_scale=0.75/len(eyes))
 
 
@@ -156,5 +139,5 @@ topo.sim.grid_layout([v1, rgc, cones, images], xstep=70/len(eyes), ystep=200, it
 # Measure feature maps based on unthresholded initial response for
 # speed and reliability
 from topo.analysis.featureresponses import MeasureResponseCommand
-MeasureResponseCommand.duration=params.duration
+MeasureResponseCommand.duration=0.175
 MeasureResponseCommand.apply_output_fns=False
